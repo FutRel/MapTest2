@@ -44,8 +44,9 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
         mp.start();
-        thread.start();
         phrases = findViewById(R.id.phrases);
         phrases.setText(arrOfPhrases[(int)(Math.random()* arrOfPhrases.length)]);
+        thread.start();
+        onDestroy();
     }
 }
