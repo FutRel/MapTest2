@@ -47,6 +47,5 @@ public class StartActivity extends AppCompatActivity {
         phrases = findViewById(R.id.phrases);
         phrases.setText(arrOfPhrases[(int)(Math.random()* arrOfPhrases.length)]);
         thread.start();
-        onDestroy();
     }
 }
