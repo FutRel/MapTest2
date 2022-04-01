@@ -34,7 +34,9 @@ public class StartActivity extends AppCompatActivity {
             "Скатертью дорога!",
             "Попутного ветра!",
             "Не гоняй и дураку дорогу дай",
-            "Да прибудет с тобой Сила!"};
+            "Да прибудет с тобой Сила!",
+            "Да благославит тебя Всеотец",
+            ""};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,6 @@ public class StartActivity extends AppCompatActivity {
         mp.start();
         thread.start();
         phrases = findViewById(R.id.phrases);
-        phrases.setText(arrOfPhrases[(int)(Math.random()*15)]);
+        phrases.setText(arrOfPhrases[(int)(Math.random()* arrOfPhrases.length)]);
     }
 }

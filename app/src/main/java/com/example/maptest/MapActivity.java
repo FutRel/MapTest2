@@ -57,12 +57,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                                 .getCameraPosition())
                         .bearing(var)
                         .build()));
-                try {
-                    Thread.sleep(500);
-                    Log.i("132", "wait");
-                } catch (InterruptedException e) {}
-                Log.e("132", String.valueOf(sensorEvent.values[0]));
-                Log.d("132", String.valueOf(((((int)sensorEvent.values[0] + 1) / 15) * 15)));
+                try {Thread.sleep(500);} catch (InterruptedException e) {}
             }
             t[0]++;
         }
