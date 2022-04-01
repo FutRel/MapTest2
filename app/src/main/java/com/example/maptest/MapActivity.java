@@ -21,6 +21,7 @@ import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
 
+
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap myMap;
@@ -112,7 +113,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         myMap = googleMap;
         UiSettings uiSettings = myMap.getUiSettings();
-
         myMap.setBuildingsEnabled(false);
         myMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
