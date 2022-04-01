@@ -12,6 +12,11 @@
             android:roundIcon="@drawable/fon"
             android:supportsRtl="true"
             android:theme="@style/Theme.MapTest">
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/google_maps_key"/>
+
+
         <activity
                 android:name=".StartActivity"
                 android:exported="true">
@@ -21,19 +26,9 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="@string/google_maps_key"/>
-
         <activity
                 android:name=".MapActivity"
-                android:exported="true"
-                android:label="comp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+                android:exported="true">
         </activity>
     </application>
 

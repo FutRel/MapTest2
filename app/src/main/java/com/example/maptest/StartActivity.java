@@ -2,6 +2,7 @@ package com.example.maptest;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -17,6 +18,23 @@ public class StartActivity extends AppCompatActivity {
             startActivity(intent2);
         } catch (InterruptedException e) {}
     });
+    TextView phrases;
+    String[] arrOfPhrases = new String[]{
+            "Счастливого пути!",
+            "Доброго пути!",
+            "Счастливо добраться!",
+            "Комфортной езды!",
+            "Быстрого пути!",
+            "Без приключений!",
+            "В добрый путь!",
+            "Будь внимательней на дороге!",
+            "Удачи на дорогах",
+            "Пусть удовольствие от дороги будет сильнее усталости",
+            "Без бешеных бабулек!",
+            "Скатертью дорога!",
+            "Попутного ветра!",
+            "Не гоняй и дураку дорогу дай",
+            "Да прибудет с тобой Сила!"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,5 +43,7 @@ public class StartActivity extends AppCompatActivity {
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
         mp.start();
         thread.start();
+        phrases = findViewById(R.id.phrases);
+        phrases.setText(arrOfPhrases[(int)(Math.random()*15)]);
     }
 }

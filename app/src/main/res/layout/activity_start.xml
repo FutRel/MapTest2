@@ -24,5 +24,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:textSize="25sp"
+            android:id="@+id/phrases"
+            android:gravity="center"
     />
 </RelativeLayout>
