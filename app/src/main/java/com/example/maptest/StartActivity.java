@@ -1,6 +1,7 @@
 package com.example.maptest;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -16,11 +17,12 @@ public class StartActivity extends AppCompatActivity {
             startActivity(intent2);
         } catch (InterruptedException e) {}
     });
-
+    final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        mp.start();
         thread.start();
     }
 }
