@@ -12,16 +12,17 @@ public class StartActivity extends AppCompatActivity {
 
     Thread thread = new Thread(() -> {
         try {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(500);
             Intent intent2 = new Intent(StartActivity.this, MapActivity.class);
             startActivity(intent2);
         } catch (InterruptedException e) {}
     });
-    final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
         mp.start();
         thread.start();
     }
