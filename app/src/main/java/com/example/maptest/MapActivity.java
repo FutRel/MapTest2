@@ -266,4 +266,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             follow(view);
         }
     }
+
+    public void stop(View view){
+
+    }
 }
