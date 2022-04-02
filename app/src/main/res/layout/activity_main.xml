@@ -10,6 +10,14 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="\n AppName!"
+            android:layout_centerHorizontal="true"
+            android:textSize="25sp"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
     />
@@ -28,10 +36,22 @@
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/play"
+            android:src="@drawable/start"
             android:layout_centerInParent="true"
             android:onClick="start"
+            android:id="@+id/startBt"
             android:background="@color/white"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startBt"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:hint="DO IT!"
+            android:textSize="25sp"
+            android:textColor="@color/black"
     />
 
 
