@@ -39,7 +39,6 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
         PolylineOptions polygonOptions = new PolylineOptions()
                 .add(sydney, new LatLng(-34, 0), zero, new LatLng(0, 151));
         mMap.addPolyline(polygonOptions);
-
     }
 
     public void plus (View view){mMap.animateCamera(CameraUpdateFactory.zoomIn());}
