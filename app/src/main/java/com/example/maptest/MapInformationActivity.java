@@ -95,23 +95,26 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         mMap = googleMap;
         mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.my_style));
+                        this, R.raw.bl_wh));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(arrayLatitude.get(0), arrayLongitude.get(0))));
         PolylineOptions polylineOptions = new PolylineOptions();
         for (int i = 0; i < arrayLatitude.size(); i++) polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
         mMap.addPolyline(polylineOptions);
     }
-
-    public void onClickplus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomIn());}
-    public void onClickminus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomOut());}
+    public void back(View view){
+        Intent intent = new Intent(MapInformationActivity.this, ListViewActivity.class);
+        startActivity(intent);
+    }
+    public void plus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomIn());}
+    public void minus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomOut());}
     public void change(View view){
         if (changeStyle % 2 == 1)mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.my_style));
+                        this, R.raw.bl_wh));
         else mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.bl_wh));
+                        this, R.raw.my_style));
         changeStyle++;
 
     }

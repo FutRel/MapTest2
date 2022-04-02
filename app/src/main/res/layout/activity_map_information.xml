@@ -1,9 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          xmlns:map="http://schemas.android.com/apk/res-auto"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:id="@+id/map"
-          tools:context=".MapInformationActivity"
-          android:name="com.google.android.gms.maps.SupportMapFragment"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                tools:context=".MapInformationActivity"
+                app:mapType="hybrid"
+>
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        tools:context=".MapInformationActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+    <com.google.android.material.button.MaterialButton
+            android:backgroundTint="@color/biruze"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="change"
+            android:textSize="13sp"
+            android:onClick="change"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="false"
+            app:cornerRadius="56dp"
+    />
+    <com.google.android.material.button.MaterialButton
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:text="+"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:onClick="plus"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/min"
+            android:backgroundTint="@color/biruze"
+            app:cornerRadius="50dp"
+
+    />
+    <com.google.android.material.button.MaterialButton
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="-"
+            android:textSize="20sp"
+            android:id="@+id/min"
+            android:onClick="minus"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/biruze"
+            app:cornerRadius="50dp"
+    />
+    <com.google.android.material.button.MaterialButton
+            android:backgroundTint="@color/biruze"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="back"
+            android:textSize="13sp"
+            android:onClick="back"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            app:cornerRadius="56dp"
+    />
+
+</RelativeLayout>

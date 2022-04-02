@@ -13,7 +13,9 @@ public class StartActivity extends AppCompatActivity {
 
     Thread thread = new Thread(() -> {
         try {
-            TimeUnit.MILLISECONDS.sleep(500);
+            final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
+            mp.start();
+            TimeUnit.MILLISECONDS.sleep(1500);
             Intent intent2 = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent2);
         } catch (InterruptedException e) {}
@@ -42,8 +44,6 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
-        mp.start();
         phrases = findViewById(R.id.phrases);
         phrases.setText(arrOfPhrases[(int)(Math.random()* arrOfPhrases.length)]);
         thread.start();

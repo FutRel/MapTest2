@@ -68,7 +68,7 @@
     />
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"
-            android:layout_width="95dp"
+            android:layout_width="100dp"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="change"

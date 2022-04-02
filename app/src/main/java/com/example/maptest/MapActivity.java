@@ -112,7 +112,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         myMap.setBuildingsEnabled(false);
         myMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.my_style));
+                        this, R.raw.bl_wh));
 
         uiSettings.setScrollGesturesEnabled(true);
         uiSettings.setZoomControlsEnabled(false);
@@ -201,10 +201,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void change(View view){
         if (changeStyle % 2 == 1)myMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.my_style));
+                        this, R.raw.bl_wh));
         else myMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.bl_wh));
+                        this, R.raw.my_style));
         changeStyle++;
 
     }
