@@ -12,6 +12,12 @@
         <entry key="..\:/MapTest/app/src/main/res/layout/main.xml" value="0.21666666666666667" />
         <entry key="..\:/MapTest/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.384375" />
         <entry key="..\:/MapTest/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.384375" />
+        <entry key="..\:/androidProjects/MapTest2/app/src/main/res/layout/activity_list_view.xml" value="0.25" />
+        <entry key="..\:/androidProjects/MapTest2/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/androidProjects/MapTest2/app/src/main/res/layout/activity_map_information.xml" value="0.25" />
+        <entry key="..\:/androidProjects/MapTest2/app/src/main/res/layout/activity_map_view.xml" value="0.25" />
+        <entry key="..\:/androidProjects/MapTest2/app/src/main/res/layout/activity_maps.xml" value="0.25" />
+        <entry key="..\:/androidProjects/MapTest2/app/src/main/res/layout/activity_start.xml" value="0.25" />
       </map>
     </option>
   </component>
