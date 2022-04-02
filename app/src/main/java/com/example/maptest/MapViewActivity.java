@@ -1,5 +1,6 @@
 package com.example.maptest;
 
+import android.view.View;
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -39,4 +40,7 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
         mMap.addPolyline(polygonOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
+    public void plus (View view){mMap.animateCamera(CameraUpdateFactory.zoomIn());}
+    public void minus (View view){mMap.animateCamera(CameraUpdateFactory.zoomOut());}
 }
