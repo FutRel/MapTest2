@@ -21,7 +21,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
-
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
