@@ -34,7 +34,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     Button follow;
     Button pauseOrResume;
     Button stop;
-
     private long changeStyle = 0;
 
     ArrayList<Double> arrayOfLat = new ArrayList<>();
