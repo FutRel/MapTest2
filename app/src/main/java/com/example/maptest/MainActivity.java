@@ -14,8 +14,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void start(View view){
+    public void readNotes(View view){
         Intent intent2 = new Intent(MainActivity.this, MapViewActivity.class);
+        startActivity(intent2);
+    }
+    public void start(View view){
+        Intent intent2 = new Intent(MainActivity.this, MapActivity.class);
         startActivity(intent2);
     }
 }

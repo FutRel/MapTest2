@@ -42,4 +42,17 @@
             android:backgroundTint="@color/biruze"
             app:cornerRadius="50dp"
     />
+
+    <com.google.android.material.button.MaterialButton
+            android:backgroundTint="@color/biruze"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="back"
+            android:textSize="13sp"
+            android:onClick="back"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="false"
+            app:cornerRadius="56dp"
+    />
 </RelativeLayout>
