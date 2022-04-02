@@ -6,8 +6,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDelegate;
-
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class StartActivity extends AppCompatActivity {

@@ -20,9 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
-
 import java.util.concurrent.TimeUnit;
-
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -162,6 +160,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             myMap.addMarker(new MarkerOptions().position(userLocation)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
             myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
+
         }
         sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
     }

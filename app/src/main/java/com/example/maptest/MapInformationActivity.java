@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
-
 import com.example.maptest.data.PointsContract;
 import com.example.maptest.data.PointsDBHelper;
 import com.example.maptest.data.RecordsContract;
@@ -19,7 +18,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.maptest.databinding.ActivityMapInformationBinding;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -32,7 +30,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     private RecordsDBHelper rdbHelper;
     private PointsDBHelper pdbHelper;
     private ArrayList<Double> arrayLatitude;
-    private ArrayList<Double> arrayLongitude;
+    protected ArrayList<Double> arrayLongitude;
     private long changeStyle = 0;
 
     @Override

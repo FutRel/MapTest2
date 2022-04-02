@@ -11,9 +11,6 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.maptest.data.RecordsContract;
 import com.example.maptest.data.RecordsDBHelper;
-import com.example.maptest.data.RecordsContract;
-import com.example.maptest.data.RecordsDBHelper;
-
 import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
