@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
             cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
             cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
             pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
-            Intent intent = new Intent(MainActivity.this, MapActivity.class);
-            startActivity(intent);
         }
+        Intent intent = new Intent(MainActivity.this, MapActivity.class);
+        startActivity(intent);
     }
 
     public void intentToLV(View view){
