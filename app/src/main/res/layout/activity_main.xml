@@ -49,8 +49,8 @@
             android:layout_below="@+id/startBt"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:hint="DO IT!"
-            android:textSize="25sp"
+            android:text="DO IT!"
+            android:textSize="20sp"
             android:textColor="@color/black"
     />
 
