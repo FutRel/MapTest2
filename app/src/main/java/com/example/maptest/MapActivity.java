@@ -11,14 +11,10 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.*;
@@ -94,13 +90,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-                myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
+                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
             }catch (Exception ex){
                 LatLng userLocation = new LatLng(0, 0);
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-                myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
+                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
             }
         }
 
@@ -152,23 +148,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) return;
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                300, 1, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                300, 1, followListener);
-        locationManager.removeUpdates(locationListener);
+                0, 3, followListener);
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         try {
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
             myMap.clear();
             myMap.addMarker(new MarkerOptions().position(userLocation)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
+            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
         }catch (Exception ex){
             LatLng userLocation = new LatLng(0, 0);
             myMap.clear();
             myMap.addMarker(new MarkerOptions().position(userLocation)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
+            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
         }
         sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
     }
