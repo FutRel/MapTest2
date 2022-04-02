@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.*;
@@ -151,7 +152,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) return;
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                300, 1, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 300, 1, followListener);
+        locationManager.removeUpdates(locationListener);
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         try {
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
@@ -219,7 +223,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
     public void change(View view){
-        if (changeStyle % 2 == 1)myMap.setMapStyle(
+        if (changeStyle % 2 == 1) myMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.bl_wh));
         else myMap.setMapStyle(

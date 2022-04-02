@@ -3,6 +3,7 @@ package com.example.maptest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
@@ -98,7 +99,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
                         this, R.raw.bl_wh));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(arrayLatitude.get(0), arrayLongitude.get(0))));
-        PolylineOptions polylineOptions = new PolylineOptions();
+        PolylineOptions polylineOptions = new PolylineOptions().color(Color.MAGENTA);
         for (int i = 0; i < arrayLatitude.size(); i++) polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
         mMap.addPolyline(polylineOptions);
     }
