@@ -51,38 +51,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         return !mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ActivityMapsBinding binding = ActivityMapsBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        follow = findViewById(R.id.follow);
-        pauseOrResume = findViewById(R.id.pauseOrResume);
-        stop = findViewById(R.id.stop);
-
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-
-        if (isGeoDisabled()) {
-            thread.start();
-            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-        }
-
-        stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record", Toast.LENGTH_SHORT).show());
-        stop.setOnLongClickListener(v -> {
-            Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MapActivity.this, MainActivity.class);
-            startActivity(intent);
-
-            return true;
-        });
-    }
-
     SensorEventListener sensorEventListener = new SensorEventListener() {
         final long[] t = {0};
 
@@ -154,6 +122,38 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onStatusChanged(String provider, int status, Bundle extras) {
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActivityMapsBinding binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        follow = findViewById(R.id.follow);
+        pauseOrResume = findViewById(R.id.pauseOrResume);
+        stop = findViewById(R.id.stop);
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+
+        if (isGeoDisabled()) {
+            thread.start();
+            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        }
+
+        stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record", Toast.LENGTH_SHORT).show());
+        stop.setOnLongClickListener(v -> {
+            Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MapActivity.this, MainActivity.class);
+            startActivity(intent);
+
+            return true;
+        });
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
