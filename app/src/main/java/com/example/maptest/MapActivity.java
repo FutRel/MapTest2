@@ -12,8 +12,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -31,8 +33,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     SensorManager sensorManager;
     Sensor sensorAccelerometer;
     private long changeStyle = 0;
-    private ArrayList<Double> arrayOfLat = new ArrayList<>();
-    private ArrayList<Double> arrayOfLng = new ArrayList<>();
+    ArrayList<Double> arrayOfLat = new ArrayList<>();
+    ArrayList<Double> arrayOfLng = new ArrayList<>();
 
     Thread thread = new Thread(() -> {
         try {
@@ -89,6 +91,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 arrayOfLat.add(location.getLatitude());
                 arrayOfLng.add(location.getLongitude());
+                Toast.makeText(MapActivity.this, location.getLatitude() + " " +
+                        location.getLongitude(), Toast.LENGTH_SHORT).show();
+
 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
@@ -113,6 +118,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 arrayOfLat.add(location.getLatitude());
                 arrayOfLng.add(location.getLongitude());
+                Toast.makeText(MapActivity.this, location.getLatitude() + " " +
+                        location.getLongitude(), Toast.LENGTH_SHORT).show();
 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
@@ -137,24 +144,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.bl_wh));
 
-        uiSettings.setScrollGesturesEnabled(true);
-        uiSettings.setZoomControlsEnabled(false);
         uiSettings.setMapToolbarEnabled(false);
         uiSettings.setIndoorLevelPickerEnabled(false);
-        uiSettings.setZoomGesturesEnabled(false);
-        uiSettings.setTiltGesturesEnabled(false);
 
-        uiSettings.setZoomGesturesEnabled(false);
-        uiSettings.setScrollGesturesEnabled(false);
-        uiSettings.setRotateGesturesEnabled(false);
-        uiSettings.setTiltGesturesEnabled(false);
+        uiSettings.setZoomGesturesEnabled(true);
+        uiSettings.setScrollGesturesEnabled(true);
+        uiSettings.setRotateGesturesEnabled(true);
+        uiSettings.setTiltGesturesEnabled(true);
 
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) return;
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                400, 2, locationListener);
+                400, 4, locationListener);
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         try {
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
@@ -163,8 +166,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
             myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
         }catch (Exception ex){
-            LatLng userLocation = new LatLng(54.759955, 56.020414);
-            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14));
+            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(54.759955, 56.020414), 14));
         }
     }
 
@@ -177,8 +179,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
     }
-    public void onClickplus(View view) {myMap.animateCamera(CameraUpdateFactory.zoomIn());}
-    public void onClickminus(View view) {myMap.animateCamera(CameraUpdateFactory.zoomOut());}
+    public void onClickplus(View view) {
+        if (follow.getText().toString().equals("follow")) myMap.animateCamera(CameraUpdateFactory.zoomIn());
+        else myMap.moveCamera(CameraUpdateFactory.zoomIn());
+    }
+    public void onClickminus(View view) {
+        if (follow.getText().toString().equals("follow")) myMap.animateCamera(CameraUpdateFactory.zoomOut());
+        else myMap.moveCamera(CameraUpdateFactory.zoomOut());
+    }
     public void follow(View view) {
         UiSettings uiSettings = myMap.getUiSettings();
         if (follow.getText().toString().equals("follow")) {
@@ -188,9 +196,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
 
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 2, followListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListener);
             locationManager.removeUpdates(locationListener);
             sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
 
@@ -201,7 +209,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             uiSettings.setTiltGesturesEnabled(false);
         }
         else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 2, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListener);
             locationManager.removeUpdates(followListener);
             sensorManager.unregisterListener(sensorEventListener);
 
