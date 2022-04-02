@@ -102,10 +102,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         for (int i = 0; i < arrayLatitude.size(); i++) polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
         mMap.addPolyline(polylineOptions);
     }
-    public void back(View view){
-        Intent intent = new Intent(MapInformationActivity.this, ListViewActivity.class);
-        startActivity(intent);
-    }
+    public void back(View view){startActivity(new Intent(MapInformationActivity.this, ListViewActivity.class));}
     public void plus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomIn());}
     public void minus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomOut());}
     public void change(View view){
