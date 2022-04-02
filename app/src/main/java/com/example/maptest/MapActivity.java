@@ -34,6 +34,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     Button follow;
     Button pauseOrResume;
+    Button stop;
 
     private long changeStyle = 0;
 
@@ -64,6 +65,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         follow = findViewById(R.id.follow);
         pauseOrResume = findViewById(R.id.pauseOrResume);
+        stop = findViewById(R.id.stop);
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
@@ -71,6 +74,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             thread.start();
             startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
+
+        stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record", Toast.LENGTH_SHORT).show());
+        stop.setOnLongClickListener(v -> {
+            Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MapActivity.this, MainActivity.class);
+            startActivity(intent);
+
+            return true;
+        });
     }
 
     SensorEventListener sensorEventListener = new SensorEventListener() {
@@ -103,9 +115,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 arrayOfLat.add(location.getLatitude());
                 arrayOfLng.add(location.getLongitude());
-                Toast.makeText(MapActivity.this, location.getLatitude() + " " +
-                        location.getLongitude(), Toast.LENGTH_SHORT).show();
-
 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
@@ -131,8 +140,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 arrayOfLat.add(location.getLatitude());
                 arrayOfLng.add(location.getLongitude());
-                Toast.makeText(MapActivity.this, location.getLatitude() + " " +
-                        location.getLongitude(), Toast.LENGTH_SHORT).show();
 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
@@ -267,7 +274,4 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    public void stop(View view){
-
-    }
 }

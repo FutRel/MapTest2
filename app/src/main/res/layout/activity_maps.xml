@@ -104,11 +104,9 @@
             android:text="stop"
             android:textSize="13sp"
             android:id="@+id/stop"
-            android:onClick="stop"
             android:layout_alignParentRight="false"
             app:cornerRadius="56dp"
             android:layout_above="@+id/linear"
-
     />
 
     <LinearLayout
