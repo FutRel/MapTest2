@@ -24,6 +24,7 @@
             android:layout_alignParentBottom="false"
             android:layout_alignParentRight="true"
             app:cornerRadius="50dp"
+            android:layout_marginTop="5dp"
     />
     <com.google.android.material.button.MaterialButton
             android:layout_width="45dp"
@@ -57,14 +58,16 @@
             android:layout_width="112dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="unfollow"
+            android:text="follow"
             android:textSize="13sp"
             android:id="@+id/follow"
             android:onClick="follow"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             app:cornerRadius="56dp"
+            android:layout_above="@+id/linear"
+
     />
+
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"
             android:layout_width="100dp"
@@ -76,12 +79,15 @@
             android:layout_alignParentBottom="false"
             android:layout_alignParentRight="false"
             app:cornerRadius="56dp"
+            android:layout_marginLeft="@android:dimen/app_icon_size"
+            android:layout_marginTop="5dp"
     />
-
     <LinearLayout
+            android:background="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:id="@+id/linear"
             android:orientation="vertical">
         <TextView
                 android:layout_width="match_parent"

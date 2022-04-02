@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -30,13 +31,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     SensorManager sensorManager;
     Sensor sensorAccelerometer;
     private long changeStyle = 0;
+    private ArrayList<Double> arrayOfLat = new ArrayList<>();
+    private ArrayList<Double> arrayOfLng = new ArrayList<>();
 
     Thread thread = new Thread(() -> {
         try {
             TimeUnit.MILLISECONDS.sleep(2000);
         } catch (InterruptedException e) {}
     });
-
     public boolean isGeoDisabled() {
         LocationManager mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         return !mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -85,6 +87,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onLocationChanged(@NonNull Location location) {
             try {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                arrayOfLat.add(location.getLatitude());
+                arrayOfLng.add(location.getLongitude());
+
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
@@ -106,6 +111,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onLocationChanged(@NonNull Location location) {
             try {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                arrayOfLat.add(location.getLatitude());
+                arrayOfLng.add(location.getLongitude());
+
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
@@ -146,7 +154,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) return;
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                0, 3, followListener);
+                400, 2, locationListener);
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         try {
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
@@ -155,14 +163,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
             myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
         }catch (Exception ex){
-            LatLng userLocation = new LatLng(0, 0);
-            myMap.clear();
-            myMap.addMarker(new MarkerOptions().position(userLocation)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
-
+            LatLng userLocation = new LatLng(54.759955, 56.020414);
+            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14));
         }
-        sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     public void onClick(View view) {
@@ -185,9 +188,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
 
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300, 1, followListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 2, followListener);
             locationManager.removeUpdates(locationListener);
             sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
 
