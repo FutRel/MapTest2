@@ -148,9 +148,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record", Toast.LENGTH_SHORT).show());
         stop.setOnLongClickListener(v -> {
             Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
+            
             Intent intent = new Intent(MapActivity.this, MainActivity.class);
             startActivity(intent);
-
             return true;
         });
     }
