@@ -12,7 +12,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,6 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -29,18 +29,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private GoogleMap myMap;
     private LocationManager locationManager;
-    Button follow;
     SensorManager sensorManager;
     Sensor sensorAccelerometer;
+
+    Button follow;
+    Button pauseOrResume;
+
     private long changeStyle = 0;
+
     ArrayList<Double> arrayOfLat = new ArrayList<>();
     ArrayList<Double> arrayOfLng = new ArrayList<>();
 
     Thread thread = new Thread(() -> {
         try {
             TimeUnit.MILLISECONDS.sleep(2000);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+        }
     });
+
     public boolean isGeoDisabled() {
         LocationManager mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         return !mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -57,10 +63,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         follow = findViewById(R.id.follow);
+        pauseOrResume = findViewById(R.id.pauseOrResume);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
-        if (isGeoDisabled()){
+        if (isGeoDisabled()) {
             thread.start();
             startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
@@ -68,21 +75,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     SensorEventListener sensorEventListener = new SensorEventListener() {
         final long[] t = {0};
+
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
-            float var = ((((int)sensorEvent.values[0] + 1) / 15) * 15);
-            if(t[0] % 40 == 0) {
+            float var = ((((int) sensorEvent.values[0] + 1) / 15) * 15);
+            if (t[0] % 40 == 0) {
                 myMap.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder(myMap
                                 .getCameraPosition())
                         .bearing(var)
                         .build()));
-                try {Thread.sleep(500);} catch (InterruptedException e) {}
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
             }
             t[0]++;
         }
 
         @Override
-        public void onAccuracyChanged(Sensor sensor, int i) {}
+        public void onAccuracyChanged(Sensor sensor, int i) {
+        }
     };
     LocationListener followListener = new LocationListener() {
         @Override
@@ -99,7 +111,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
                 myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 LatLng userLocation = new LatLng(0, 0);
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
@@ -109,7 +121,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     };
     LocationListener locationListener = new LocationListener() {
         @Override
@@ -124,15 +137,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 LatLng userLocation = new LatLng(0, 0);
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
             }
         }
+
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     };
 
     @Override
@@ -165,7 +180,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             myMap.addMarker(new MarkerOptions().position(userLocation)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
             myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
-        }catch (Exception ex){
+        } catch (Exception ex) {
             myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(54.759955, 56.020414), 14));
         }
     }
@@ -179,14 +194,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
     }
+
     public void onClickplus(View view) {
         if (follow.getText().toString().equals("follow")) myMap.animateCamera(CameraUpdateFactory.zoomIn());
         else myMap.moveCamera(CameraUpdateFactory.zoomIn());
     }
+
     public void onClickminus(View view) {
         if (follow.getText().toString().equals("follow")) myMap.animateCamera(CameraUpdateFactory.zoomOut());
         else myMap.moveCamera(CameraUpdateFactory.zoomOut());
     }
+
     public void follow(View view) {
         UiSettings uiSettings = myMap.getUiSettings();
         if (follow.getText().toString().equals("follow")) {
@@ -207,8 +225,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             uiSettings.setScrollGesturesEnabled(false);
             uiSettings.setRotateGesturesEnabled(false);
             uiSettings.setTiltGesturesEnabled(false);
-        }
-        else {
+        } else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListener);
             locationManager.removeUpdates(followListener);
             sensorManager.unregisterListener(sensorEventListener);
@@ -225,7 +242,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .build()));
         }
     }
-    public void change(View view){
+
+    public void change(View view) {
         if (changeStyle % 2 == 1) myMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.bl_wh));
@@ -234,5 +252,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         this, R.raw.my_style));
         changeStyle++;
 
+    }
+
+    public void pauseOrResume(View view) {
+        if (pauseOrResume.getText().toString().equals("pause")) {
+            pauseOrResume.setText("resume");
+            locationManager.removeUpdates(followListener);
+            locationManager.removeUpdates(locationListener);
+            sensorManager.unregisterListener(sensorEventListener);
+        } else {
+            pauseOrResume.setText("pause");
+            follow(view);
+            follow(view);
+        }
     }
 }

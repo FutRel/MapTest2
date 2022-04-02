@@ -82,6 +82,19 @@
             android:layout_marginLeft="@android:dimen/app_icon_size"
             android:layout_marginTop="5dp"
     />
+    <com.google.android.material.button.MaterialButton
+            android:backgroundTint="@color/orange"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="pause"
+            android:textSize="13sp"
+            android:id="@+id/pauseOrResume"
+            android:onClick="pauseOrResume"
+            app:cornerRadius="56dp"
+            android:layout_above="@+id/linear"
+            android:layout_centerHorizontal="true"
+    />
     <LinearLayout
             android:background="@color/black"
             android:layout_width="match_parent"
