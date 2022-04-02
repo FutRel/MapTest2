@@ -3,6 +3,7 @@ package com.example.maptest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.maptest.databinding.ActivityMapInformationBinding;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -30,6 +32,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     private PointsDBHelper pdbHelper;
     private ArrayList<Double> arrayLatitude;
     private ArrayList<Double> arrayLongitude;
+    private long changeStyle = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +93,26 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                        this, R.raw.my_style));
+
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(arrayLatitude.get(0), arrayLongitude.get(0))));
         PolylineOptions polylineOptions = new PolylineOptions();
-        for (int i = 0; i < arrayLatitude.size(); i++) {
-            polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
-        }
+        for (int i = 0; i < arrayLatitude.size(); i++) polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
         mMap.addPolyline(polylineOptions);
+    }
+
+    public void onClickplus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomIn());}
+    public void onClickminus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomOut());}
+    public void change(View view){
+        if (changeStyle % 2 == 1)mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                        this, R.raw.my_style));
+        else mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                        this, R.raw.bl_wh));
+        changeStyle++;
+
     }
 }
