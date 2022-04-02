@@ -2,6 +2,7 @@ package com.example.maptest;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,12 +16,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -31,6 +35,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     SensorManager sensorManager;
     Sensor sensorAccelerometer;
     private long changeStyle = 0;
+
+    Thread thread = new Thread(() -> {
+        try {
+            TimeUnit.MILLISECONDS.sleep(2000);
+        } catch (InterruptedException e) {}
+    });
+
+    public boolean isGeoDisabled() {
+        LocationManager mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        return !mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +60,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         follow = findViewById(R.id.follow);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+
+        if (isGeoDisabled()){
+            thread.start();
+            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        }
     }
 
     SensorEventListener sensorEventListener = new SensorEventListener() {

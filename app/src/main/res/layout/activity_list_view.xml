@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         tools:context=".ListViewActivity">
     <ListView
@@ -11,11 +12,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <com.google.android.material.button.MaterialButton
+            android:backgroundTint="@color/biruze"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:gravity="center"
             android:text="back"
+            android:textSize="13sp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            app:cornerRadius="56dp"
             android:onClick="intentToMA"/>
 
 </RelativeLayout>
