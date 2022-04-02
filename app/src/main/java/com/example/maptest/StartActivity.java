@@ -16,7 +16,7 @@ public class StartActivity extends AppCompatActivity {
         try {
             final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
             mp.start();
-            TimeUnit.MILLISECONDS.sleep(1500);
+            TimeUnit.MILLISECONDS.sleep(2500);
             Intent intent2 = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent2);
         } catch (InterruptedException e) {}
