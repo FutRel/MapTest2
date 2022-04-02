@@ -14,7 +14,7 @@ public class StartActivity extends AppCompatActivity {
     Thread thread = new Thread(() -> {
         try {
             TimeUnit.MILLISECONDS.sleep(500);
-            Intent intent2 = new Intent(StartActivity.this, MapActivity.class);
+            Intent intent2 = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent2);
         } catch (InterruptedException e) {}
     });
