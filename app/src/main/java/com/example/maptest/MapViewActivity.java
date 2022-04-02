@@ -21,9 +21,7 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         binding = ActivityMapViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
@@ -34,11 +32,11 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
 
         LatLng sydney = new LatLng(-34, 151);
         LatLng zero = new LatLng(0, 0);
+
         PolylineOptions polygonOptions = new PolylineOptions()
                 .add(sydney, new LatLng(-34, 0), zero, new LatLng(0, 151), sydney);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.addPolyline(polygonOptions);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
     }
 
     public void plus (View view){mMap.animateCamera(CameraUpdateFactory.zoomIn());}
