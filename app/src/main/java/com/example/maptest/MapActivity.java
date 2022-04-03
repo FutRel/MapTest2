@@ -141,7 +141,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-                Toast.makeText(MapActivity.this, location.getLatitude() + " " +
+                Toast.makeText(MapActivity.this, location.getLatitude() + "\n" +
                         location.getLongitude(), Toast.LENGTH_SHORT).show();
             } catch (Exception ex) {
                 LatLng userLocation = new LatLng(0, 0);
@@ -174,7 +174,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-                Toast.makeText(MapActivity.this, location.getLatitude() + " " +
+                Toast.makeText(MapActivity.this, location.getLatitude() + "\n" +
                         location.getLongitude(), Toast.LENGTH_SHORT).show();
                 myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
             } catch (Exception ex) {
