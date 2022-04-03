@@ -172,18 +172,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record",
                 Toast.LENGTH_SHORT).show());
-        stop.setOnLongClickListener(v -> {
-            Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
-            //distance - тут уже финальное значение дистанции, можешь его взять, но оно float
-            //distance - это метры если что
-            Intent intent = new Intent(MapActivity.this, MainActivity.class);
-            startActivity(intent);
-            return true;
+        stop.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
+                //distance - тут уже финальное значение дистанции, можешь его взять, но оно float
+                //distance - это метры если что
+                Intent intent = new Intent(MapActivity.this, MainActivity.class);
+                MapActivity.this.startActivity(intent);
+                return true;
+            }
         });
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         myMap = googleMap;
         UiSettings uiSettings = myMap.getUiSettings();
         myMap.setBuildingsEnabled(false);
