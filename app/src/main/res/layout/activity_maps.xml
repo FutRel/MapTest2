@@ -122,26 +122,29 @@
                 android:text="zero"
                 android:id="@+id/distanse"
                 android:textColor="@color/white"
-                android:layout_marginLeft="25dp"
                 android:gravity="center"
+                android:layout_gravity=""
         />
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:textColor="@color/white"
+                android:gravity="center"
         />
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2"
                 android:textColor="@color/white"
+                android:gravity="center"
         />
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="3"
                 android:textColor="@color/white"
+                android:gravity="center"
         />
 
     </LinearLayout>
