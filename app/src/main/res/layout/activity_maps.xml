@@ -87,7 +87,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="pause"
+            android:text="resume"
             android:textSize="13sp"
             android:id="@+id/pauseOrResume"
             android:onClick="pauseOrResume"
@@ -119,7 +119,9 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="asdsaadasd"
+                android:text="zero"
+                android:id="@+id/distanse"
+                android:textColor="@color/white"
         />
         <TextView
                 android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -35,6 +36,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     Button pauseOrResume;
     Button stop;
     private long changeStyle = 0;
+    private double distanse = 0;
+    private LatLng lastLatLng = null;
+    TextView dist;
 
     ArrayList<Double> arrayOfLat = new ArrayList<>();
     ArrayList<Double> arrayOfLng = new ArrayList<>();
@@ -79,9 +83,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onLocationChanged(@NonNull Location location) {
             try {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                arrayOfLat.add(location.getLatitude());
-                arrayOfLng.add(location.getLongitude());
-
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
@@ -104,9 +105,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onLocationChanged(@NonNull Location location) {
             try {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                arrayOfLat.add(location.getLatitude());
-                arrayOfLng.add(location.getLongitude());
-
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
@@ -123,6 +121,75 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     };
 
+    LocationListener locationListenerWDist = new LocationListener() {
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            try {
+                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                if (lastLatLng == null) lastLatLng = userLocation;
+                else{
+                    float[] result = new float[1];
+                    Location.distanceBetween(lastLatLng.latitude, lastLatLng.longitude,
+                            userLocation.latitude, userLocation.longitude, result);
+                    distanse += result[0];
+                    lastLatLng = userLocation;
+                    dist.setText(String.valueOf(Math.abs(distanse)));
+                }
+                arrayOfLat.add(location.getLatitude());
+                arrayOfLng.add(location.getLongitude());
+
+                myMap.clear();
+                myMap.addMarker(new MarkerOptions().position(userLocation)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
+                Toast.makeText(MapActivity.this, location.getLatitude() + " " +
+                        location.getLongitude(), Toast.LENGTH_SHORT).show();
+            } catch (Exception ex) {
+                LatLng userLocation = new LatLng(0, 0);
+                myMap.clear();
+                myMap.addMarker(new MarkerOptions().position(userLocation)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+    };
+    LocationListener followListenerWDist = new LocationListener() {
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            try {
+                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                if (lastLatLng == null) lastLatLng = userLocation;
+                else{
+                    float[] result = new float[1];
+                    Location.distanceBetween(lastLatLng.latitude, lastLatLng.longitude,
+                            userLocation.latitude, userLocation.longitude, result);
+                    distanse += result[0];
+                    lastLatLng = userLocation;
+                    dist.setText(String.valueOf(Math.abs(distanse)));
+                }
+                arrayOfLat.add(location.getLatitude());
+                arrayOfLng.add(location.getLongitude());
+
+                myMap.clear();
+                myMap.addMarker(new MarkerOptions().position(userLocation)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
+                Toast.makeText(MapActivity.this, location.getLatitude() + " " +
+                        location.getLongitude(), Toast.LENGTH_SHORT).show();
+                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
+            } catch (Exception ex) {
+                LatLng userLocation = new LatLng(0, 0);
+                myMap.clear();
+                myMap.addMarker(new MarkerOptions().position(userLocation)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
+                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +203,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         follow = findViewById(R.id.follow);
         pauseOrResume = findViewById(R.id.pauseOrResume);
         stop = findViewById(R.id.stop);
+        dist = findViewById(R.id.distanse);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
@@ -145,10 +213,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
 
-        stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record", Toast.LENGTH_SHORT).show());
+        stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record",
+                Toast.LENGTH_SHORT).show());
         stop.setOnLongClickListener(v -> {
             Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
-            
+            //distanse - тут уже финальное значение дистанции, можешь его взять, но оно float
+            //или с TView dist считать
             Intent intent = new Intent(MapActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
@@ -221,17 +291,29 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
 
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListener);
-            locationManager.removeUpdates(locationListener);
-            sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
-
             follow.setText("unfollow");
             uiSettings.setZoomGesturesEnabled(false);
             uiSettings.setScrollGesturesEnabled(false);
             uiSettings.setRotateGesturesEnabled(false);
             uiSettings.setTiltGesturesEnabled(false);
+            sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
+            locationManager.removeUpdates(locationListener);
+
+            if (pauseOrResume.getText().toString().equals("resume")) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListener);
+            }
+            else {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListenerWDist);
+                locationManager.removeUpdates(locationListenerWDist);
+            }
         } else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListener);
+            if (pauseOrResume.getText().toString().equals("resume")) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListener);
+            }
+            else {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
+                locationManager.removeUpdates(followListenerWDist);
+            }
             locationManager.removeUpdates(followListener);
             sensorManager.unregisterListener(sensorEventListener);
 
@@ -262,13 +344,27 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void pauseOrResume(View view) {
         if (pauseOrResume.getText().toString().equals("pause")) {
             pauseOrResume.setText("resume");
-            locationManager.removeUpdates(followListener);
-            locationManager.removeUpdates(locationListener);
-            sensorManager.unregisterListener(sensorEventListener);
+            locationManager.removeUpdates(followListenerWDist);
+            locationManager.removeUpdates(locationListenerWDist);
         } else {
             pauseOrResume.setText("pause");
-            follow(view);
-            follow(view);
+
+            if (follow.getText().toString().equals("follow")) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
+
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
+                locationManager.removeUpdates(followListenerWDist);
+                locationManager.removeUpdates(locationListener);
+                sensorManager.unregisterListener(sensorEventListener);
+            }
+            else {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListenerWDist);
+                locationManager.removeUpdates(locationListenerWDist);
+                locationManager.removeUpdates(followListener);
+                sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
+            }
         }
     }
 }
