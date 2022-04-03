@@ -242,6 +242,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             Toast.makeText(this, "Firstly resume tracking", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(pauseOrResume.getText().toString().equals("start")){
+            Toast.makeText(this, "Firstly start tracking", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (follow.getText().toString().equals("follow")) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
