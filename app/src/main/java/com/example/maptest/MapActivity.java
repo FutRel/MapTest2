@@ -226,12 +226,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
     }
 
-    public void onClickplus(View view) {
+    public void onClickPlus(View view) {
         if (follow.getText().toString().equals("follow")) myMap.animateCamera(CameraUpdateFactory.zoomIn());
         else myMap.moveCamera(CameraUpdateFactory.zoomIn());
     }
 
-    public void onClickminus(View view) {
+    public void onClickMinus(View view) {
         if (follow.getText().toString().equals("follow")) myMap.animateCamera(CameraUpdateFactory.zoomOut());
         else myMap.moveCamera(CameraUpdateFactory.zoomOut());
     }
