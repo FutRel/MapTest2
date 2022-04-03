@@ -87,7 +87,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="resume"
+            android:text="start"
             android:textSize="13sp"
             android:id="@+id/pauseOrResume"
             android:onClick="pauseOrResume"
