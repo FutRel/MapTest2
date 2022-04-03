@@ -224,7 +224,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
                     pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
                 }
-
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
                 return true;
             }
