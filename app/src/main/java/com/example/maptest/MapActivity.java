@@ -1,9 +1,12 @@
 package com.example.maptest;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,6 +22,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+import com.example.maptest.data.PointsContract;
+import com.example.maptest.data.PointsDBHelper;
+import com.example.maptest.data.RecordsContract;
+import com.example.maptest.data.RecordsDBHelper;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
@@ -42,6 +49,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     ArrayList<Double> arrayOfLat = new ArrayList<>();
     ArrayList<Double> arrayOfLng = new ArrayList<>();
+
+    private RecordsDBHelper rdbHelper;
+    private PointsDBHelper pdbHelper;
 
     Thread thread = new Thread(() -> {
         try {
@@ -151,6 +161,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMapsBinding binding = ActivityMapsBinding.inflate(getLayoutInflater());
+
+        rdbHelper = new RecordsDBHelper(this);
+        pdbHelper = new PointsDBHelper(this);
+
         setContentView(binding.getRoot());
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
@@ -176,8 +190,41 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             @Override
             public boolean onLongClick(View v) {
                 Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
-                //distance - тут уже финальное значение дистанции, можешь его взять, но оно float
-                //distance - это метры если что
+
+                SQLiteDatabase rdb = rdbHelper.getWritableDatabase();
+                int time = (int) (Math.random() * 10000);
+                int day = (int) (Math.random() * 32);
+                int month = (int) (Math.random() * 13);
+                String date = day + "." + month + ".22";
+                ContentValues cvrdb = new ContentValues();
+                cvrdb.put(RecordsContract.ClassForRecords.column_distance, distance);
+                cvrdb.put(RecordsContract.ClassForRecords.column_time, time);
+                cvrdb.put(RecordsContract.ClassForRecords.column_date, date);
+                rdb.insert(RecordsContract.ClassForRecords.table_name, null, cvrdb);
+
+                SQLiteDatabase rdb2 = rdbHelper.getReadableDatabase();
+                String[] columns = {
+                        RecordsContract.ClassForRecords._id
+                };
+                Cursor cursor = rdb2.query(
+                        RecordsContract.ClassForRecords.table_name,
+                        columns, null, null, null, null, null
+                );
+                cursor.moveToLast();
+                int recordId = cursor.getInt(0);
+                cursor.close();
+
+                SQLiteDatabase pdb = pdbHelper.getWritableDatabase();
+                for (int i = 0; i < arrayOfLat.size(); i++) {
+                    double latitude = arrayOfLat.get(i);
+                    double longitude = arrayOfLat.get(i);
+                    ContentValues cvpdb = new ContentValues();
+                    cvpdb.put(PointsContract.ClassForPoints.column_latitude, latitude);
+                    cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
+                    cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
+                    pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
+                }
+
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
                 return true;
             }
