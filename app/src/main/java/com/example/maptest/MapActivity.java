@@ -178,8 +178,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
                 //distance - тут уже финальное значение дистанции, можешь его взять, но оно float
                 //distance - это метры если что
-                Intent intent = new Intent(MapActivity.this, MainActivity.class);
-                MapActivity.this.startActivity(intent);
+                MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
                 return true;
             }
         });
