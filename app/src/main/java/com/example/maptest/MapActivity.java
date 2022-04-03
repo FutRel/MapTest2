@@ -36,7 +36,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     Button pauseOrResume;
     Button stop;
     private long changeStyle = 0;
-    private double distanse = 0;
+    private double distance = 0;
     private LatLng lastLatLng = null;
     TextView dist;
 
@@ -131,9 +131,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     float[] result = new float[1];
                     Location.distanceBetween(lastLatLng.latitude, lastLatLng.longitude,
                             userLocation.latitude, userLocation.longitude, result);
-                    distanse += result[0];
+                    distance += result[0];
                     lastLatLng = userLocation;
-                    dist.setText(String.valueOf(Math.abs(distanse)));
+                    dist.setText(String.valueOf(Math.abs(distance)));
                 }
                 arrayOfLat.add(location.getLatitude());
                 arrayOfLng.add(location.getLongitude());
@@ -164,9 +164,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     float[] result = new float[1];
                     Location.distanceBetween(lastLatLng.latitude, lastLatLng.longitude,
                             userLocation.latitude, userLocation.longitude, result);
-                    distanse += result[0];
+                    distance += result[0];
                     lastLatLng = userLocation;
-                    dist.setText(String.valueOf(Math.abs(distanse)));
+                    dist.setText(String.valueOf(Math.abs(distance)));
                 }
                 arrayOfLat.add(location.getLatitude());
                 arrayOfLng.add(location.getLongitude());
@@ -255,9 +255,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             myMap.addMarker(new MarkerOptions().position(userLocation)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
             myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
-        } catch (Exception ex) {
-            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(54.759955, 56.020414), 14));
-        }
+        } catch (Exception ex) {myMap.animateCamera(CameraUpdateFactory
+                    .newLatLngZoom(new LatLng(54.759955, 56.020414), 14));}
     }
 
     public void onClick(View view) {
