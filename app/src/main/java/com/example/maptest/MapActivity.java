@@ -217,7 +217,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 SQLiteDatabase pdb = pdbHelper.getWritableDatabase();
                 for (int i = 0; i < arrayOfLat.size(); i++) {
                     double latitude = arrayOfLat.get(i);
-                    double longitude = arrayOfLat.get(i);
+                    double longitude = arrayOfLng.get(i);
                     ContentValues cvpdb = new ContentValues();
                     cvpdb.put(PointsContract.ClassForPoints.column_latitude, latitude);
                     cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
