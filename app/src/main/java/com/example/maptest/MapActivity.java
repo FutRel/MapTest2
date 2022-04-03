@@ -174,8 +174,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 Toast.LENGTH_SHORT).show());
         stop.setOnLongClickListener(v -> {
             Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
-            //distanse - тут уже финальное значение дистанции, можешь его взять, но оно float
+            //distance - тут уже финальное значение дистанции, можешь его взять, но оно float
             //или с TView dist считать
+            //distance - это метры если что
             Intent intent = new Intent(MapActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
