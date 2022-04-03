@@ -164,9 +164,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     float[] result = new float[1];
                     Location.distanceBetween(lastLatLng.latitude, lastLatLng.longitude,
                             userLocation.latitude, userLocation.longitude, result);
-                    distance += result[0];
+                    distance += Math.abs(result[0]);
                     lastLatLng = userLocation;
-                    dist.setText(String.valueOf(Math.abs(distance)));
+                    dist.setText(String.valueOf(distance));
                 }
                 arrayOfLat.add(location.getLatitude());
                 arrayOfLng.add(location.getLongitude());
