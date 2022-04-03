@@ -133,13 +133,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
                 Toast.makeText(MapActivity.this, location.getLatitude() + "\n" +
                         location.getLongitude(), Toast.LENGTH_SHORT).show();
-                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
+                myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
             } catch (Exception ex) {
                 LatLng userLocation = new LatLng(0, 0);
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
+                myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
             }
         }
 
@@ -289,28 +289,33 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public void pauseOrResume(View view) {
+        UiSettings uiSettings = myMap.getUiSettings();
         if (pauseOrResume.getText().toString().equals("pause")) {
-            pauseOrResume.setText("resume");
+            sensorManager.unregisterListener(sensorEventListener);
+
+            follow.setText("follow");
+            uiSettings.setZoomGesturesEnabled(true);
+            uiSettings.setScrollGesturesEnabled(true);
+            uiSettings.setRotateGesturesEnabled(true);
+            uiSettings.setTiltGesturesEnabled(true);
+
+            myMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder(myMap
+                            .getCameraPosition())
+                    .bearing(0)
+                    .build()));
             locationManager.removeUpdates(followListenerWDist);
             locationManager.removeUpdates(locationListenerWDist);
+            pauseOrResume.setText("resume");
         }
         else {
             pauseOrResume.setText("pause");
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
 
-            if (follow.getText().toString().equals("follow")) {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
-
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
-                locationManager.removeUpdates(followListenerWDist);
-                sensorManager.unregisterListener(sensorEventListener);
-            }
-            else {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListenerWDist);
-                locationManager.removeUpdates(locationListenerWDist);
-                sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
-            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
+            locationManager.removeUpdates(followListenerWDist);
+            sensorManager.unregisterListener(sensorEventListener);
         }
     }
 }
