@@ -78,49 +78,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onAccuracyChanged(Sensor sensor, int i) {
         }
     };
-    LocationListener followListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(@NonNull Location location) {
-            try {
-                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                myMap.clear();
-                myMap.addMarker(new MarkerOptions().position(userLocation)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
-            } catch (Exception ex) {
-                LatLng userLocation = new LatLng(0, 0);
-                myMap.clear();
-                myMap.addMarker(new MarkerOptions().position(userLocation)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
-            }
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-    };
-    LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(@NonNull Location location) {
-            try {
-                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                myMap.clear();
-                myMap.addMarker(new MarkerOptions().position(userLocation)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-            } catch (Exception ex) {
-                LatLng userLocation = new LatLng(0, 0);
-                myMap.clear();
-                myMap.addMarker(new MarkerOptions().position(userLocation)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bmznk_)));
-            }
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-    };
-
     LocationListener locationListenerWDist = new LocationListener() {
         @Override
         public void onLocationChanged(@NonNull Location location) {
@@ -246,8 +203,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) return;
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                400, 4, locationListener);
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         try {
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
@@ -281,6 +236,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     public void follow(View view) {
         UiSettings uiSettings = myMap.getUiSettings();
+        if(pauseOrResume.getText().toString().equals("resume")){
+            Toast.makeText(this, "Firstly resume tracking", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (follow.getText().toString().equals("follow")) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
@@ -296,24 +255,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             uiSettings.setRotateGesturesEnabled(false);
             uiSettings.setTiltGesturesEnabled(false);
             sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
-            locationManager.removeUpdates(locationListener);
-
-            if (pauseOrResume.getText().toString().equals("resume")) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListener);
-            }
-            else {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListenerWDist);
-                locationManager.removeUpdates(locationListenerWDist);
-            }
-        } else {
-            if (pauseOrResume.getText().toString().equals("resume")) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListener);
-            }
-            else {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
-                locationManager.removeUpdates(followListenerWDist);
-            }
-            locationManager.removeUpdates(followListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListenerWDist);
+            locationManager.removeUpdates(locationListenerWDist);
+        }
+        else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
+            locationManager.removeUpdates(followListenerWDist);
             sensorManager.unregisterListener(sensorEventListener);
 
             follow.setText("follow");
@@ -345,7 +292,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             pauseOrResume.setText("resume");
             locationManager.removeUpdates(followListenerWDist);
             locationManager.removeUpdates(locationListenerWDist);
-        } else {
+        }
+        else {
             pauseOrResume.setText("pause");
 
             if (follow.getText().toString().equals("follow")) {
@@ -355,13 +303,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
                 locationManager.removeUpdates(followListenerWDist);
-                locationManager.removeUpdates(locationListener);
                 sensorManager.unregisterListener(sensorEventListener);
             }
             else {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 4, followListenerWDist);
                 locationManager.removeUpdates(locationListenerWDist);
-                locationManager.removeUpdates(followListener);
                 sensorManager.registerListener(sensorEventListener, sensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
             }
         }
