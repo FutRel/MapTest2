@@ -186,47 +186,42 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record",
                 Toast.LENGTH_SHORT).show());
-        stop.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
+        stop.setOnLongClickListener(v -> {
+            Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
 
-                SQLiteDatabase rdb = rdbHelper.getWritableDatabase();
-                int time = (int) (Math.random() * 10000);
-                int day = (int) (Math.random() * 32);
-                int month = (int) (Math.random() * 13);
-                String date = day + "." + month + ".22";
-                ContentValues cvrdb = new ContentValues();
-                cvrdb.put(RecordsContract.ClassForRecords.column_distance, distance);
-                cvrdb.put(RecordsContract.ClassForRecords.column_time, time);
-                cvrdb.put(RecordsContract.ClassForRecords.column_date, date);
-                rdb.insert(RecordsContract.ClassForRecords.table_name, null, cvrdb);
+            SQLiteDatabase rdb = rdbHelper.getWritableDatabase();
+            int time = (int) (Math.random() * 10000);
+            int day = (int) (Math.random() * 32);
+            int month = (int) (Math.random() * 13);
+            String date = day + "." + month + ".22";
+            ContentValues cvrdb = new ContentValues();
+            cvrdb.put(RecordsContract.ClassForRecords.column_distance, distance);
+            cvrdb.put(RecordsContract.ClassForRecords.column_time, time);
+            cvrdb.put(RecordsContract.ClassForRecords.column_date, date);
+            rdb.insert(RecordsContract.ClassForRecords.table_name, null, cvrdb);
 
-                SQLiteDatabase rdb2 = rdbHelper.getReadableDatabase();
-                String[] columns = {
-                        RecordsContract.ClassForRecords._id
-                };
-                Cursor cursor = rdb2.query(
-                        RecordsContract.ClassForRecords.table_name,
-                        columns, null, null, null, null, null
-                );
-                cursor.moveToLast();
-                int recordId = cursor.getInt(0);
-                cursor.close();
+            SQLiteDatabase rdb2 = rdbHelper.getReadableDatabase();
+            String[] columns = {RecordsContract.ClassForRecords._id};
+            Cursor cursor = rdb2.query(
+                    RecordsContract.ClassForRecords.table_name,
+                    columns, null, null, null, null, null
+            );
+            cursor.moveToLast();
+            int recordId = cursor.getInt(0);
+            cursor.close();
 
-                SQLiteDatabase pdb = pdbHelper.getWritableDatabase();
-                for (int i = 0; i < arrayOfLat.size(); i++) {
-                    double latitude = arrayOfLat.get(i);
-                    double longitude = arrayOfLng.get(i);
-                    ContentValues cvpdb = new ContentValues();
-                    cvpdb.put(PointsContract.ClassForPoints.column_latitude, latitude);
-                    cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
-                    cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
-                    pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
-                }
-                MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
-                return true;
+            SQLiteDatabase pdb = pdbHelper.getWritableDatabase();
+            for (int i = 0; i < arrayOfLat.size(); i++) {
+                double latitude = arrayOfLat.get(i);
+                double longitude = arrayOfLng.get(i);
+                ContentValues cvpdb = new ContentValues();
+                cvpdb.put(PointsContract.ClassForPoints.column_latitude, latitude);
+                cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
+                cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
+                pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
             }
+            MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
+            return true;
         });
     }
 

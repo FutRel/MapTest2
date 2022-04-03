@@ -96,7 +96,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.bl_wh));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(arrayLatitude.get(0), arrayLongitude.get(0))));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arrayLatitude.get(0), arrayLongitude.get(0)), 16));
         PolylineOptions polylineOptions = new PolylineOptions().color(Color.MAGENTA);
         for (int i = 0; i < arrayLatitude.size(); i++) polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
         mMap.addPolyline(polylineOptions);
