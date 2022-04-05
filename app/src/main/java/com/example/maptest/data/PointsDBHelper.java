@@ -17,8 +17,8 @@ public class PointsDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createTable = "CREATE TABLE " + PointsContract.ClassForPoints.table_name + " (" +
                 PointsContract.ClassForPoints._id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                PointsContract.ClassForPoints.column_latitude + " REAL NOT NULL, " +
-                PointsContract.ClassForPoints.column_longitude + " REAL NOT NULL, " +
+                PointsContract.ClassForPoints.column_latitude + " REAL, " +
+                PointsContract.ClassForPoints.column_longitude + " REAL, " +
                 PointsContract.ClassForPoints.column_recordId + " INTEGER NOT NULL);";
         sqLiteDatabase.execSQL(createTable);
     }

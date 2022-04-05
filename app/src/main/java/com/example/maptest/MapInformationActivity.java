@@ -94,11 +94,20 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.bl_wh));
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arrayLatitude.get(0), arrayLongitude.get(0)), 16));
-        PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED);
-        for (int i = 0; i < arrayLatitude.size(); i++) polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
-        mMap.addPolyline(polylineOptions);
+        if (arrayLatitude.size() > 0) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arrayLatitude.get(arrayLatitude.size() - 1),
+                    arrayLongitude.get(arrayLongitude.size() - 1)), 16));
+            PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED);
+            for (int i = 1; i < arrayLatitude.size(); i++) {
+                if (arrayLatitude.get(i) != 0.0)
+                    polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
+                else {
+                    mMap.addPolyline(polylineOptions);
+                    polylineOptions = new PolylineOptions().color(Color.RED);
+                }
+            }
+            mMap.addPolyline(polylineOptions);
+        }
     }
 
     public void back(View view){startActivity(new Intent(MapInformationActivity.this, ListViewActivity.class));}
