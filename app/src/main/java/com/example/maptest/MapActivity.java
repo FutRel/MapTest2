@@ -29,7 +29,9 @@ import com.example.maptest.data.RecordsDBHelper;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -38,14 +40,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private LocationManager locationManager;
     SensorManager sensorManager;
     Sensor sensorAccelerometer;
+    Date data;
 
     Button follow;
     Button pauseOrResume;
     Button stop;
+    TextView dist;
+    TextView time;
+
     private long changeStyle = 0;
     private double distance = 0;
     private LatLng lastLatLng = null;
-    TextView dist;
+    long timeOfStart = 0;
 
     ArrayList<Double> arrayOfLat = new ArrayList<>();
     ArrayList<Double> arrayOfLng = new ArrayList<>();
@@ -93,17 +99,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onLocationChanged(@NonNull Location location) {
             try {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                if (lastLatLng == null) lastLatLng = userLocation;
+                if (lastLatLng == null){
+                    lastLatLng = userLocation;
+                    arrayOfLat.add(0.0);
+                    arrayOfLng.add(0.0);
+                }
                 else{
                     float[] result = new float[1];
                     Location.distanceBetween(lastLatLng.latitude, lastLatLng.longitude,
                             userLocation.latitude, userLocation.longitude, result);
                     distance += result[0];
                     lastLatLng = userLocation;
-                    dist.setText(String.valueOf(Math.abs(distance)));
+                    dist.setText(String.format("%.2f",distance));
+                    arrayOfLat.add(location.getLatitude());
+                    arrayOfLng.add(location.getLongitude());
                 }
-                arrayOfLat.add(location.getLatitude());
-                arrayOfLng.add(location.getLongitude());
 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
@@ -126,17 +136,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         public void onLocationChanged(@NonNull Location location) {
             try {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                if (lastLatLng == null) lastLatLng = userLocation;
+                if (lastLatLng == null){
+                    lastLatLng = userLocation;
+                    arrayOfLat.add(0.0);
+                    arrayOfLng.add(0.0);
+                }
                 else{
                     float[] result = new float[1];
                     Location.distanceBetween(lastLatLng.latitude, lastLatLng.longitude,
                             userLocation.latitude, userLocation.longitude, result);
                     distance += Math.abs(result[0]);
                     lastLatLng = userLocation;
-                    dist.setText(String.valueOf(distance));
+                    dist.setText(String.format("%.2f",distance));
+                    arrayOfLat.add(location.getLatitude());
+                    arrayOfLng.add(location.getLongitude());
                 }
-                arrayOfLat.add(location.getLatitude());
-                arrayOfLng.add(location.getLongitude());
 
                 myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(userLocation)
@@ -175,6 +189,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         pauseOrResume = findViewById(R.id.pauseOrResume);
         stop = findViewById(R.id.stop);
         dist = findViewById(R.id.distanse);
+        time = findViewById(R.id.time);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
@@ -184,43 +199,52 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
 
-        stop.setOnClickListener(v -> Toast.makeText(MapActivity.this, "Hold the button to stop record",
-                Toast.LENGTH_SHORT).show());
+        stop.setOnClickListener(v -> {
+            if (stop.getText().toString().equals("back")) MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
+            else Toast.makeText(MapActivity.this, "Hold the button to stop record",
+                Toast.LENGTH_SHORT).show();
+        });
         stop.setOnLongClickListener(v -> {
-            Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
+            if (stop.getText().toString().equals("back")) return true;
+            else{
+                Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
+                sensorManager.unregisterListener(sensorEventListener);
+                locationManager.removeUpdates(followListenerWDist);
+                locationManager.removeUpdates(locationListenerWDist);
+                SQLiteDatabase rdb = rdbHelper.getWritableDatabase();
 
-            SQLiteDatabase rdb = rdbHelper.getWritableDatabase();
-            int time = (int) (Math.random() * 10000);
-            int day = (int) (Math.random() * 32);
-            int month = (int) (Math.random() * 13);
-            String date = day + "." + month + ".22";
-            ContentValues cvrdb = new ContentValues();
-            cvrdb.put(RecordsContract.ClassForRecords.column_distance, distance);
-            cvrdb.put(RecordsContract.ClassForRecords.column_time, time);
-            cvrdb.put(RecordsContract.ClassForRecords.column_date, date);
-            rdb.insert(RecordsContract.ClassForRecords.table_name, null, cvrdb);
+                SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
+                String date = formatForDateNow.format(data);
+                int time = (int) (System.currentTimeMillis() - timeOfStart) / 1000;
 
-            SQLiteDatabase rdb2 = rdbHelper.getReadableDatabase();
-            String[] columns = {RecordsContract.ClassForRecords._id};
-            Cursor cursor = rdb2.query(
-                    RecordsContract.ClassForRecords.table_name,
-                    columns, null, null, null, null, null
-            );
-            cursor.moveToLast();
-            int recordId = cursor.getInt(0);
-            cursor.close();
+                ContentValues cvrdb = new ContentValues();
+                cvrdb.put(RecordsContract.ClassForRecords.column_distance, distance);
+                cvrdb.put(RecordsContract.ClassForRecords.column_time, time);
+                cvrdb.put(RecordsContract.ClassForRecords.column_date, date);
+                rdb.insert(RecordsContract.ClassForRecords.table_name, null, cvrdb);
 
-            SQLiteDatabase pdb = pdbHelper.getWritableDatabase();
-            for (int i = 0; i < arrayOfLat.size(); i++) {
-                double latitude = arrayOfLat.get(i);
-                double longitude = arrayOfLng.get(i);
-                ContentValues cvpdb = new ContentValues();
-                cvpdb.put(PointsContract.ClassForPoints.column_latitude, latitude);
-                cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
-                cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
-                pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
+                SQLiteDatabase rdb2 = rdbHelper.getReadableDatabase();
+                String[] columns = {RecordsContract.ClassForRecords._id};
+                Cursor cursor = rdb2.query(
+                        RecordsContract.ClassForRecords.table_name,
+                        columns, null, null, null, null, null
+                );
+                cursor.moveToLast();
+                int recordId = cursor.getInt(0);
+                cursor.close();
+
+                SQLiteDatabase pdb = pdbHelper.getWritableDatabase();
+                for (int i = 0; i < arrayOfLat.size(); i++) {
+                    double latitude = arrayOfLat.get(i);
+                    double longitude = arrayOfLng.get(i);
+                    ContentValues cvpdb = new ContentValues();
+                    cvpdb.put(PointsContract.ClassForPoints.column_latitude, latitude);
+                    cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
+                    cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
+                    pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
+                }
+                MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
             }
-            MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
             return true;
         });
     }
@@ -336,8 +360,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     public void pauseOrResume(View view) {
         UiSettings uiSettings = myMap.getUiSettings();
+        if (pauseOrResume.getText().toString().equals("start")) {
+            timeOfStart = System.currentTimeMillis();
+            data = new Date();
+        }
         if (pauseOrResume.getText().toString().equals("pause")) {
             sensorManager.unregisterListener(sensorEventListener);
+            lastLatLng = null;
 
             follow.setText("follow");
             uiSettings.setZoomGesturesEnabled(true);
@@ -355,6 +384,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
         else {
             pauseOrResume.setText("pause");
+            stop.setText("stop");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
