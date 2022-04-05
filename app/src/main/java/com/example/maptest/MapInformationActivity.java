@@ -20,7 +20,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.example.maptest.databinding.ActivityMapInformationBinding;
 import com.google.android.gms.maps.model.PolylineOptions;
-
 import java.util.ArrayList;
 
 public class MapInformationActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -97,10 +96,11 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
                         this, R.raw.bl_wh));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arrayLatitude.get(0), arrayLongitude.get(0)), 16));
-        PolylineOptions polylineOptions = new PolylineOptions().color(Color.MAGENTA);
+        PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED);
         for (int i = 0; i < arrayLatitude.size(); i++) polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
         mMap.addPolyline(polylineOptions);
     }
+
     public void back(View view){startActivity(new Intent(MapInformationActivity.this, ListViewActivity.class));}
     public void plus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomIn());}
     public void minus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomOut());}

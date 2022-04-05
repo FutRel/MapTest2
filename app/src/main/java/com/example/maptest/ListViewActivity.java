@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +39,7 @@ public class ListViewActivity extends AppCompatActivity {
             float distance = cursor.getFloat(1);
             int time = cursor.getInt(2);
             String date = cursor.getString(3);
-            String toAl = "Ride №" + counter + ", distance: " + distance + "km, time: " + time + " seconds,  date: " + date;
+            String toAl = "Ride №" + counter + ", distance: " + String.format("%.2f",distance) + "m, time: " + time + " seconds,  date: " + date;
             arrayList.add(toAl);
             arrayListID.add(id);
             counter ++;
@@ -51,14 +50,11 @@ public class ListViewActivity extends AppCompatActivity {
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
             arrayAdapter.notifyDataSetChanged();
             listView.setAdapter(arrayAdapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent intent = new Intent(ListViewActivity.this, MapInformationActivity.class);
-                    intent.putExtra("number", i + 1);
-                    intent.putExtra("idOfRecord", arrayListID.get(i));
-                    startActivity(intent);
-                }
+            listView.setOnItemClickListener((adapterView, view, i, l) -> {
+                Intent intent = new Intent(ListViewActivity.this, MapInformationActivity.class);
+                intent.putExtra("number", i + 1);
+                intent.putExtra("idOfRecord", arrayListID.get(i));
+                startActivity(intent);
             });
         }
     }
