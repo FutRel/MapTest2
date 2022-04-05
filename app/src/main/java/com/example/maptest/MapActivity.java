@@ -55,6 +55,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     ArrayList<Double> arrayOfLat = new ArrayList<>();
     ArrayList<Double> arrayOfLng = new ArrayList<>();
+    ArrayList<Long> arrOfTime = new ArrayList<>();
 
     private RecordsDBHelper rdbHelper;
     private PointsDBHelper pdbHelper;
@@ -215,8 +216,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                 SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
                 String date = formatForDateNow.format(data);
-                int time = (int) (System.currentTimeMillis() - timeOfStart) / 1000;
-
+                int time = 0;
+                for (Long aLong : arrOfTime) time += aLong;
+                time /= 1000;
                 ContentValues cvrdb = new ContentValues();
                 cvrdb.put(RecordsContract.ClassForRecords.column_distance, distance);
                 cvrdb.put(RecordsContract.ClassForRecords.column_time, time);
@@ -365,6 +367,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             data = new Date();
         }
         if (pauseOrResume.getText().toString().equals("pause")) {
+            arrOfTime.add(System.currentTimeMillis() - timeOfStart);
             sensorManager.unregisterListener(sensorEventListener);
             lastLatLng = null;
 
@@ -383,6 +386,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             pauseOrResume.setText("resume");
         }
         else {
+            timeOfStart = System.currentTimeMillis();
             pauseOrResume.setText("pause");
             stop.setText("stop");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
