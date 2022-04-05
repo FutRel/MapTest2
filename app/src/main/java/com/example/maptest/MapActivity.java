@@ -206,6 +206,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 Toast.LENGTH_SHORT).show();
         });
         stop.setOnLongClickListener(v -> {
+            if (arrayOfLat.size() == 0){
+                Toast.makeText(MapActivity.this, "Record not started", Toast.LENGTH_SHORT).show();
+                MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
+                return true;
+            }
             if (stop.getText().toString().equals("back")) return true;
             else{
                 Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
@@ -213,6 +218,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 locationManager.removeUpdates(followListenerWDist);
                 locationManager.removeUpdates(locationListenerWDist);
                 SQLiteDatabase rdb = rdbHelper.getWritableDatabase();
+                if (lastLatLng != null) arrOfTime.add(System.currentTimeMillis() - timeOfStart);
 
                 SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
                 String date = formatForDateNow.format(data);
@@ -369,6 +375,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (pauseOrResume.getText().toString().equals("pause")) {
             arrOfTime.add(System.currentTimeMillis() - timeOfStart);
             sensorManager.unregisterListener(sensorEventListener);
+            locationManager.removeUpdates(followListenerWDist);
+            locationManager.removeUpdates(locationListenerWDist);
             lastLatLng = null;
 
             follow.setText("follow");
@@ -381,8 +389,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             .getCameraPosition())
                     .bearing(0)
                     .build()));
-            locationManager.removeUpdates(followListenerWDist);
-            locationManager.removeUpdates(locationListenerWDist);
             pauseOrResume.setText("resume");
         }
         else {
