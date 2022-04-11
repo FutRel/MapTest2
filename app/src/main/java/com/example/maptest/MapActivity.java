@@ -1,8 +1,9 @@
 package com.example.maptest;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.*;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +15,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,8 +30,6 @@ import com.example.maptest.data.RecordsDBHelper;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
-
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,13 +47,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     Button pauseOrResume;
     Button stop;
     TextView dist;
-    static TextView time;
+    TextView time;
 
     private long changeStyle = 0;
     private double distance = 0;
     private LatLng lastLatLng = null;
     long timeOfStart = 0;
-    int timeForBroad = 0;
+    int TVTime = 0;
 
     ArrayList<Double> arrayOfLat = new ArrayList<>();
     ArrayList<Double> arrayOfLng = new ArrayList<>();
@@ -62,12 +62,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private RecordsDBHelper rdbHelper;
     private PointsDBHelper pdbHelper;
 
-    private TimeBroadcastReceiver timeBroadcastReceiver = new TimeBroadcastReceiver();
-
     Thread thread = new Thread(() -> {
         try {
             TimeUnit.MILLISECONDS.sleep(2000);
         } catch (InterruptedException e) {
+        }
+    });
+    Thread timerTest = new Thread(() -> {
+        while (true){
+            try {
+                if(pauseOrResume.getText().toString().equals("pause")) {
+                    TimeUnit.SECONDS.sleep(1);
+                    time.setText(String.valueOf(TVTime));
+                    TVTime++;
+                }
+            } catch (InterruptedException e) {}
+            Log.e("159", "time");
         }
     });
 
@@ -206,6 +216,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 Toast.LENGTH_SHORT).show();
         });
         stop.setOnLongClickListener(v -> {
+            pauseOrResume.setText("resume");
             if (arrayOfLat.size() == 0){
                 Toast.makeText(MapActivity.this, "Record not started", Toast.LENGTH_SHORT).show();
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
@@ -252,9 +263,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
                 }
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
+                timerTest.stop();
             }
             return true;
         });
+        timerTest.start();
     }
 
     @Override
@@ -373,7 +386,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             data = new Date();
         }
         if (pauseOrResume.getText().toString().equals("pause")) {
-            unregisterBroadcastReceiver(view);
             arrOfTime.add(System.currentTimeMillis() - timeOfStart);
             sensorManager.unregisterListener(sensorEventListener);
             locationManager.removeUpdates(followListenerWDist);
@@ -393,7 +405,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             pauseOrResume.setText("resume");
         }
         else {
-            registerBroadcastReceiver(view);
             timeOfStart = System.currentTimeMillis();
             pauseOrResume.setText("pause");
             stop.setText("stop");
@@ -402,23 +413,5 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
         }
-    }
-
-    public void registerBroadcastReceiver(View view){
-        this.registerReceiver(timeBroadcastReceiver, new IntentFilter(
-                "android.intent.action.TIME_TICK"));
-    }
-    public void unregisterBroadcastReceiver(View view){
-        this.unregisterReceiver(
-                timeBroadcastReceiver);
-    }
-
-    public class TimeBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            MapActivity.time.setText(String.valueOf(timeForBroad));
-            timeForBroad++;
-        }
-
     }
 }
