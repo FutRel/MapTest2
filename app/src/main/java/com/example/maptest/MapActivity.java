@@ -264,6 +264,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 }
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
                 timerTest.stop();
+
             }
             return true;
         });
