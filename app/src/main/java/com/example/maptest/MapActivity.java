@@ -65,8 +65,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     Thread thread = new Thread(() -> {
         try {
             TimeUnit.MILLISECONDS.sleep(2000);
-        } catch (InterruptedException e) {
-        }
+        } catch (InterruptedException e) {}
     });
     Thread timerTest = new Thread(() -> {
         while (true){
@@ -267,6 +266,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
             return true;
         });
+
         timerTest.start();
     }
 
