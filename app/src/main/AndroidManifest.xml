@@ -11,6 +11,7 @@
             android:label="comp"
             android:roundIcon="@drawable/logo"
             android:supportsRtl="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MapTest">
 
         <meta-data
