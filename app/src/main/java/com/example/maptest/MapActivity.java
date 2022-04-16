@@ -123,7 +123,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             userLocation.latitude, userLocation.longitude, result);
                     distance += result[0];
                     lastLatLng = userLocation;
-                    dist.setText(String.format("%.2f",distance));
+                    dist.setText(String.format("%.2f",distance / 1000));
                     arrayOfLat.add(location.getLatitude());
                     arrayOfLng.add(location.getLongitude());
                 }
@@ -158,7 +158,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             userLocation.latitude, userLocation.longitude, result);
                     distance += Math.abs(result[0]);
                     lastLatLng = userLocation;
-                    dist.setText(String.format("%.2f",distance));
+                    dist.setText(String.format("%.2f",distance / 1000));
                     arrayOfLat.add(location.getLatitude());
                     arrayOfLng.add(location.getLongitude());
                 }
@@ -221,7 +221,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         stop.setOnLongClickListener(v -> {
             threadBool = false;
             if (arrayOfLat.size() < 2){
-                Toast.makeText(MapActivity.this, "Вы не начали запись", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapActivity.this, "Вы не проехали ни метра\n                      :(", Toast.LENGTH_SHORT).show();
                 sensorManager.unregisterListener(sensorEventListener);
                 locationManager.removeUpdates(followListenerWDist);
                 locationManager.removeUpdates(locationListenerWDist);
