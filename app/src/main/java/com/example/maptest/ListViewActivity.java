@@ -13,6 +13,7 @@ import com.example.maptest.data.RecordsContract;
 import com.example.maptest.data.RecordsDBHelper;
 import com.example.maptest.recycler.RecordAdapter;
 import com.example.maptest.recycler.RecordForRecycler;
+import com.example.maptest.recycler.RecyclerItemSpace;
 
 import java.util.ArrayList;
 
@@ -44,8 +45,8 @@ public class ListViewActivity extends AppCompatActivity {
             float distance = cursor.getFloat(1);
             int time = cursor.getInt(2);
             String date = cursor.getString(3);
-            String numberToItem = "Record №" + id;
-            String distanceToItem = String.format("%.2f", distance) + "km";
+            String numberToItem = "№" + id;
+            String distanceToItem = String.format("%.2f", distance) + "m";
             String timeToItem = time + " seconds";
             arrayListRecords.add(new RecordForRecycler(numberToItem, distanceToItem, timeToItem, date));
             arrayListID.add(id);
@@ -54,6 +55,7 @@ public class ListViewActivity extends AppCompatActivity {
         cursor.close();
         if(!arrayListRecords.isEmpty()){
             recyclerView = findViewById(R.id.list);
+            recyclerView.addItemDecoration(new RecyclerItemSpace(10));
             RecordAdapter.OnRecordClickListener recordClickListener = new RecordAdapter.OnRecordClickListener() {
                 @Override
                 public void onRecordClick(RecordForRecycler record, int position) {
