@@ -46,7 +46,7 @@ public class ListViewActivity extends AppCompatActivity {
             int time = cursor.getInt(2);
             String date = cursor.getString(3);
             String numberToItem = "№" + counter;
-            String distanceToItem = String.format("%.2f", distance) + "m";
+            String distanceToItem = String.format("%.2f", distance / 1000) + "km";
             String timeToItem = time + " seconds";
             arrayListRecords.add(new RecordForRecycler(numberToItem, distanceToItem, timeToItem, date));
             arrayListID.add(id);
