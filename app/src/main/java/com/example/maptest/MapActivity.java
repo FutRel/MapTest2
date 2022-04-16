@@ -78,7 +78,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 } catch (InterruptedException e) {}
             }
             if (!threadBool) break;
-            Log.e("159", "time");
         }
     });
 
