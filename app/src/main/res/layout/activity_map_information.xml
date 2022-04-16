@@ -12,7 +12,14 @@
         android:layout_height="match_parent"
         android:id="@+id/map"
         tools:context=".MapInformationActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+    />
+    <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:background="@android:color/transparent"
+    />
 
     <com.google.android.material.button.MaterialButton
             android:layout_width="45dp"
