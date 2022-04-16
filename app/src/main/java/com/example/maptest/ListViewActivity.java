@@ -48,12 +48,12 @@ public class ListViewActivity extends AppCompatActivity {
             String date = cursor.getString(3);
             String numberToItem = "№" + counter;
             String distanceToItem = String.format("%.2f", distance / 1000) + "км";
-            SimpleDateFormat hoursFormat = new SimpleDateFormat("HH");
-            SimpleDateFormat minFormat = new SimpleDateFormat("mm");
-            SimpleDateFormat secFormat = new SimpleDateFormat("ss");
-            String timeHours = hoursFormat.format(time / 3600);
-            String timeMin = minFormat.format(time % 3600 / 60);
-            String timeSec= secFormat.format(time % 3600 % 60);
+            String timeHours = "" + time / 3600;
+            if(timeHours.length() == 1) timeHours = "0" + timeHours;
+            String timeMin = "" + time % 3600 / 60;
+            if(timeMin.length() == 1) timeMin = "0" + timeMin;
+            String timeSec = "" + time % 3600 % 60;
+            if(timeSec.length() == 1) timeSec = "0" + timeSec;
             String timeToItem = timeHours + ":" + timeMin + ":" + timeSec;
             arrayListRecords.add(new RecordForRecycler(numberToItem, distanceToItem, timeToItem, date));
             arrayListID.add(id);
