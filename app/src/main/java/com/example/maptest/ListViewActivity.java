@@ -8,13 +8,18 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.maptest.data.RecordsContract;
 import com.example.maptest.data.RecordsDBHelper;
+import com.example.maptest.recycler.RecordAdapter;
+import com.example.maptest.recycler.RecordForRecycler;
+
 import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
 
     private RecordsDBHelper rdbHelper;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,7 @@ public class ListViewActivity extends AppCompatActivity {
                 RecordsContract.ClassForRecords.table_name,
                 columns, null, null, null, null, null
         );
-        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<RecordForRecycler> arrayListRecords = new ArrayList<>();
         ArrayList<Integer> arrayListID = new ArrayList<>();
         int counter = 1;
         while(cursor.moveToNext()){
@@ -39,23 +44,27 @@ public class ListViewActivity extends AppCompatActivity {
             float distance = cursor.getFloat(1);
             int time = cursor.getInt(2);
             String date = cursor.getString(3);
-            String toAl = "Ride №" + counter + ", distance: " + String.format("%.2f",distance) + "m, time: " + time + " seconds,  date: " + date;
-            arrayList.add(toAl);
+            String numberToItem = "Record №" + id;
+            String distanceToItem = String.format("%.2f", distance) + "km";
+            String timeToItem = time + " seconds";
+            arrayListRecords.add(new RecordForRecycler(numberToItem, distanceToItem, timeToItem, date));
             arrayListID.add(id);
             counter ++;
         }
         cursor.close();
-        if(!arrayList.isEmpty()){
-            ListView listView = findViewById(R.id.listview);
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
-            arrayAdapter.notifyDataSetChanged();
-            listView.setAdapter(arrayAdapter);
-            listView.setOnItemClickListener((adapterView, view, i, l) -> {
-                Intent intent = new Intent(ListViewActivity.this, MapInformationActivity.class);
-                intent.putExtra("number", i + 1);
-                intent.putExtra("idOfRecord", arrayListID.get(i));
-                startActivity(intent);
-            });
+        if(!arrayListRecords.isEmpty()){
+            recyclerView = findViewById(R.id.list);
+            RecordAdapter.OnRecordClickListener recordClickListener = new RecordAdapter.OnRecordClickListener() {
+                @Override
+                public void onRecordClick(RecordForRecycler record, int position) {
+                    Intent intent = new Intent(ListViewActivity.this, MapInformationActivity.class);
+                    intent.putExtra("number", position + 1);
+                    intent.putExtra("idOfRecord", arrayListID.get(position));
+                    startActivity(intent);
+                }
+            };
+            RecordAdapter adapter = new RecordAdapter(this, arrayListRecords, recordClickListener);
+            recyclerView.setAdapter(adapter);
         }
     }
 
