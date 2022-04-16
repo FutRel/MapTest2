@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="biruze">#00FFFF</color>
     <color name="orange">#ffb02e</color>
+    <color name="grey_white">#cccccc</color>
+    <color name="light_font">#FBFBFB</color>
+    <color name="grey_font">#ff9e9e9e</color>
+    <color name="text_shadow">#7F000000</color>
+    <color name="text_shadow_white">#FFFFFF</color>
 </resources>

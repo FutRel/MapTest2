@@ -27,7 +27,6 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     private GoogleMap mMap;
     private ArrayList<Double> arrayLatitude;
     protected ArrayList<Double> arrayLongitude;
-    private long changeStyle = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +119,4 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     public void back(View view){startActivity(new Intent(MapInformationActivity.this, ListViewActivity.class));}
     public void plus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomIn());}
     public void minus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomOut());}
-    public void change(View view){
-        if (changeStyle % 2 == 1)mMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.bl_wh));
-        else mMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.my_style));
-        changeStyle++;
-
-    }
 }

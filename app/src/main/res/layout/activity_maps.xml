@@ -16,9 +16,9 @@
     />
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"
-            android:layout_width="75dp"
+            android:layout_width="85dp"
             android:layout_height="50dp"
-            android:text="me"
+            android:text="найти"
             android:textSize="13sp"
             android:onClick="onClick"
             android:layout_alignParentBottom="false"
@@ -33,10 +33,11 @@
             android:textSize="20sp"
             android:layout_centerVertical="true"
             android:id="@+id/plus"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/grey_white"
             android:onClick="onClickPlus"
             android:layout_alignParentRight="true"
             android:layout_above="@+id/minus"
-            android:backgroundTint="@color/biruze"
             app:cornerRadius="50dp"
 
     />
@@ -47,18 +48,19 @@
             android:text="-"
             android:textSize="20sp"
             android:id="@+id/minus"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/grey_white"
             android:onClick="onClickMinus"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:backgroundTint="@color/biruze"
             app:cornerRadius="50dp"
     />
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"
-            android:layout_width="112dp"
+            android:layout_width="120dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="follow"
+            android:text="привязать"
             android:textSize="13sp"
             android:id="@+id/follow"
             android:onClick="follow"
@@ -69,25 +71,11 @@
     />
 
     <com.google.android.material.button.MaterialButton
-            android:backgroundTint="@color/biruze"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:text="change"
-            android:textSize="13sp"
-            android:onClick="change"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentRight="false"
-            app:cornerRadius="56dp"
-            android:layout_marginLeft="@android:dimen/app_icon_size"
-            android:layout_marginTop="5dp"
-    />
-    <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/orange"
-            android:layout_width="100dp"
+            android:layout_width="137dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="start"
+            android:text="старт"
             android:textSize="13sp"
             android:id="@+id/pauseOrResume"
             android:onClick="pauseOrResume"
@@ -101,7 +89,7 @@
             android:layout_width="112dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="back"
+            android:text="назад"
             android:textSize="13sp"
             android:id="@+id/stop"
             android:layout_alignParentRight="false"
@@ -109,7 +97,7 @@
             android:layout_above="@+id/linear"
     />
 
-    <LinearLayout
+    <RelativeLayout
             android:background="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,7 +107,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="zero"
+                android:text="0.0"
                 android:id="@+id/distanse"
                 android:textColor="@color/white"
                 android:gravity="center"
@@ -128,10 +116,11 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="time"
+                android:text="0"
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:id="@+id/time"
+                android:layout_below="@+id/distanse"
         />
         <TextView
                 android:layout_width="match_parent"
@@ -141,6 +130,6 @@
                 android:gravity="center"
         />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

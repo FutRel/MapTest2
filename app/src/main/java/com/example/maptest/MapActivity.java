@@ -16,7 +16,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,7 +50,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     TextView dist;
     TextView time;
 
-    private long changeStyle = 0;
     private double distance = 0;
     private LatLng lastLatLng = null;
     long timeOfStart = 0;
@@ -71,7 +69,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     });
     Thread timerTest = new Thread(() -> {
         while (true){
-            if(pauseOrResume.getText().toString().equals("pause")) {
+            if(pauseOrResume.getText().toString().equals("пауза")) {
                 try {TimeUnit.SECONDS.sleep(1);
                     time.setText(String.valueOf(TVTime));
                     TVTime++;
@@ -214,21 +212,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         stop.setOnClickListener(v -> {
-            if (stop.getText().toString().equals("back")) {
+            if (stop.getText().toString().equals("назад")) {
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
                 threadBool = false;
             }
-            else Toast.makeText(MapActivity.this, "Hold the button to stop record", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(MapActivity.this, "Удерживайте кнопку чтобы остановить запись", Toast.LENGTH_SHORT).show();
         });
         stop.setOnLongClickListener(v -> {
             threadBool = false;
-            if (arrayOfLat.size() == 0){
-                Toast.makeText(MapActivity.this, "Record not started", Toast.LENGTH_SHORT).show();
+            if (arrayOfLat.size() < 2){
+                Toast.makeText(MapActivity.this, "Вы не начали запись", Toast.LENGTH_SHORT).show();
+                sensorManager.unregisterListener(sensorEventListener);
+                locationManager.removeUpdates(followListenerWDist);
+                locationManager.removeUpdates(locationListenerWDist);
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
                 return true;
             }
             else{
-                Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapActivity.this, "Запись окончена", Toast.LENGTH_SHORT).show();
                 sensorManager.unregisterListener(sensorEventListener);
                 locationManager.removeUpdates(followListenerWDist);
                 locationManager.removeUpdates(locationListenerWDist);
@@ -316,26 +317,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public void onClickPlus(View view) {
-        if (follow.getText().toString().equals("follow")) myMap.animateCamera(CameraUpdateFactory.zoomIn());
+        if (follow.getText().toString().equals("привязать")) myMap.animateCamera(CameraUpdateFactory.zoomIn());
         else myMap.moveCamera(CameraUpdateFactory.zoomIn());
     }
 
     public void onClickMinus(View view) {
-        if (follow.getText().toString().equals("follow")) myMap.animateCamera(CameraUpdateFactory.zoomOut());
+        if (follow.getText().toString().equals("привязать")) myMap.animateCamera(CameraUpdateFactory.zoomOut());
         else myMap.moveCamera(CameraUpdateFactory.zoomOut());
     }
 
     public void follow(View view) {
         UiSettings uiSettings = myMap.getUiSettings();
-        if(pauseOrResume.getText().toString().equals("resume")){
-            Toast.makeText(this, "Firstly resume tracking", Toast.LENGTH_SHORT).show();
+        if(pauseOrResume.getText().toString().equals("продолжить")){
+            Toast.makeText(this, "Сначала продолжите запись", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(pauseOrResume.getText().toString().equals("start")){
-            Toast.makeText(this, "Firstly start tracking", Toast.LENGTH_SHORT).show();
+        if(pauseOrResume.getText().toString().equals("старт")){
+            Toast.makeText(this, "Сначала начните запись", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (follow.getText().toString().equals("follow")) {
+        if (follow.getText().toString().equals("привязать")) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
@@ -344,7 +345,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
 
-            follow.setText("unfollow");
+            follow.setText("отвязать");
             uiSettings.setZoomGesturesEnabled(false);
             uiSettings.setScrollGesturesEnabled(false);
             uiSettings.setRotateGesturesEnabled(false);
@@ -358,7 +359,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             locationManager.removeUpdates(followListenerWDist);
             sensorManager.unregisterListener(sensorEventListener);
 
-            follow.setText("follow");
+            follow.setText("привязать");
             uiSettings.setZoomGesturesEnabled(true);
             uiSettings.setScrollGesturesEnabled(true);
             uiSettings.setRotateGesturesEnabled(true);
@@ -371,31 +372,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    public void change(View view) {
-        if (changeStyle % 2 == 1) myMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.bl_wh));
-        else myMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.my_style));
-        changeStyle++;
-
-    }
-
     public void pauseOrResume(View view) {
         UiSettings uiSettings = myMap.getUiSettings();
-        if (pauseOrResume.getText().toString().equals("start")) {
+        if (pauseOrResume.getText().toString().equals("старт")) {
             timeOfStart = System.currentTimeMillis();
             data = new Date();
         }
-        if (pauseOrResume.getText().toString().equals("pause")) {
+        if (pauseOrResume.getText().toString().equals("пауза")) {
             arrOfTime.add(System.currentTimeMillis() - timeOfStart);
             sensorManager.unregisterListener(sensorEventListener);
             locationManager.removeUpdates(followListenerWDist);
             locationManager.removeUpdates(locationListenerWDist);
             lastLatLng = null;
 
-            follow.setText("follow");
+            follow.setText("привязать");
             uiSettings.setZoomGesturesEnabled(true);
             uiSettings.setScrollGesturesEnabled(true);
             uiSettings.setRotateGesturesEnabled(true);
@@ -405,12 +395,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             .getCameraPosition())
                     .bearing(0)
                     .build()));
-            pauseOrResume.setText("resume");
+            pauseOrResume.setText("продолжить");
         }
         else {
             timeOfStart = System.currentTimeMillis();
-            pauseOrResume.setText("pause");
-            stop.setText("stop");
+            pauseOrResume.setText("пауза");
+            stop.setText("стоп");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;

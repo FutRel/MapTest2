@@ -7,11 +7,19 @@
         android:background="@color/white"
         tools:context=".MainActivity">
 
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_below="@+id/name"
+            android:layout_centerHorizontal="true"
+    />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="\n AppName!"
+            android:text="\n AppName!\n\n"
             android:layout_centerHorizontal="true"
+            android:id="@+id/name"
             android:textSize="25sp"
     />
 
@@ -36,11 +44,23 @@
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/start"
-            android:layout_centerInParent="true"
+            android:src="@drawable/log"
             android:onClick="start"
             android:id="@+id/startBt"
             android:background="@color/white"
+            android:layout_centerInParent="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="СТАРТ"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:shadowColor="@color/text_shadow_white"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
+            android:shadowRadius="1"
     />
 
     <TextView
@@ -49,9 +69,8 @@
             android:layout_below="@+id/startBt"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="DO IT!"
-            android:textSize="20sp"
-            android:textColor="@color/black"
+            android:text="СДЕЛАЙ ЭТО!!!"
+            android:textSize="15sp"
     />
 
 

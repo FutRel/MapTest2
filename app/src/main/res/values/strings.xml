@@ -6,6 +6,6 @@
     <string name="location_settings">Location settings</string>
     <string name="msg_switch_network">GPS Required</string>
     <string name="title_activity_map_view">MapViewActivity</string>
-    <string name="show"><u>Show DataBase\n\n</u></string>
+    <string name="show"><u>Просмотр записей\n\n</u></string>
     <string name="title_activity_map_information">MapInformationActivity</string>
 </resources>
