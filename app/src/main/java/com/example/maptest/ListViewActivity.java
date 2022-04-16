@@ -15,6 +15,7 @@ import com.example.maptest.recycler.RecordAdapter;
 import com.example.maptest.recycler.RecordForRecycler;
 import com.example.maptest.recycler.RecyclerItemSpace;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
@@ -47,7 +48,13 @@ public class ListViewActivity extends AppCompatActivity {
             String date = cursor.getString(3);
             String numberToItem = "№" + counter;
             String distanceToItem = String.format("%.2f", distance / 1000) + "км";
-            String timeToItem = time / 3600 + ":" + time % 3600 / 60 + ":" +  time % 3600 % 60;
+            SimpleDateFormat hoursFormat = new SimpleDateFormat("HH");
+            SimpleDateFormat minFormat = new SimpleDateFormat("mm");
+            SimpleDateFormat secFormat = new SimpleDateFormat("ss");
+            String timeHours = hoursFormat.format(time / 3600);
+            String timeMin = minFormat.format(time % 3600 / 60);
+            String timeSec= secFormat.format(time % 3600 % 60);
+            String timeToItem = timeHours + ":" + timeMin + ":" + timeSec;
             arrayListRecords.add(new RecordForRecycler(numberToItem, distanceToItem, timeToItem, date));
             arrayListID.add(id);
             counter ++;
