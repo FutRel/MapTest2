@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import static com.example.maptest.MainActivity.threadBool;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -69,13 +70,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     });
     Thread timerTest = new Thread(() -> {
         while (true){
-            try {
-                if(pauseOrResume.getText().toString().equals("pause")) {
-                    TimeUnit.SECONDS.sleep(1);
+            if(pauseOrResume.getText().toString().equals("pause")) {
+                try {TimeUnit.SECONDS.sleep(1);
                     time.setText(String.valueOf(TVTime));
                     TVTime++;
-                }
-            } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {}
+            }
+            if (!threadBool) break;
             Log.e("159", "time");
         }
     });
@@ -201,6 +202,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         dist = findViewById(R.id.distanse);
         time = findViewById(R.id.time);
 
+        threadBool = true;
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
@@ -210,18 +213,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         stop.setOnClickListener(v -> {
-            if (stop.getText().toString().equals("back")) MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
-            else Toast.makeText(MapActivity.this, "Hold the button to stop record",
-                Toast.LENGTH_SHORT).show();
+            if (stop.getText().toString().equals("back")) {
+                MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
+                threadBool = false;
+            }
+            else Toast.makeText(MapActivity.this, "Hold the button to stop record", Toast.LENGTH_SHORT).show();
         });
         stop.setOnLongClickListener(v -> {
-            pauseOrResume.setText("resume");
+            threadBool = false;
             if (arrayOfLat.size() == 0){
                 Toast.makeText(MapActivity.this, "Record not started", Toast.LENGTH_SHORT).show();
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
                 return true;
             }
-            if (stop.getText().toString().equals("back")) return true;
             else{
                 Toast.makeText(MapActivity.this, "Recording stopped", Toast.LENGTH_SHORT).show();
                 sensorManager.unregisterListener(sensorEventListener);
@@ -261,12 +265,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
                     pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
                 }
-                timerTest.interrupt();
                 MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
             }
             return true;
         });
-
         timerTest.start();
     }
 
