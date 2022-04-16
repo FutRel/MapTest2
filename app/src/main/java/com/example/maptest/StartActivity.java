@@ -13,7 +13,9 @@ public class StartActivity extends AppCompatActivity {
     Thread thread = new Thread(() -> {
         try {
             final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
-            mp.start();
+            final MediaPlayer mp2 = MediaPlayer.create(this, R.raw.sound2);
+            MediaPlayer[] arr = new MediaPlayer[]{mp, mp2};
+            arr[(int)(Math.random()*2)].start();
             TimeUnit.MILLISECONDS.sleep(2500);
             Intent intent2 = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent2);
