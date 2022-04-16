@@ -25,9 +25,6 @@ import java.util.ArrayList;
 public class MapInformationActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ActivityMapInformationBinding binding;
-    private RecordsDBHelper rdbHelper;
-    private PointsDBHelper pdbHelper;
     private ArrayList<Double> arrayLatitude;
     protected ArrayList<Double> arrayLongitude;
     private long changeStyle = 0;
@@ -36,15 +33,15 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMapInformationBinding.inflate(getLayoutInflater());
+        com.example.maptest.databinding.ActivityMapInformationBinding binding = ActivityMapInformationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        rdbHelper = new RecordsDBHelper(this);
-        pdbHelper = new PointsDBHelper(this);
+        RecordsDBHelper rdbHelper = new RecordsDBHelper(this);
+        PointsDBHelper pdbHelper = new PointsDBHelper(this);
         Intent getIntent = getIntent();
         int number = getIntent.getIntExtra("number", 0);
         int idOfRecord = getIntent.getIntExtra("idOfRecord", 0);
