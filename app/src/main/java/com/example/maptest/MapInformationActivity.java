@@ -117,7 +117,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arrayLatitude.get(arrayLatitude.size() - 2),
                     arrayLongitude.get(arrayLongitude.size() - 2)), 16));
 
-            PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED);
+            PolylineOptions polylineOptions = new PolylineOptions().color(Color.CYAN);
             PolylineOptions polylineOptionsGrey = new PolylineOptions().color(Color.GRAY);
 
             for(int i = 0; i < arrayLatitude.size();i++) if (arrayLatitude.get(arrayLatitude.size() - 1) == 0.0){
@@ -129,7 +129,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
                     polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
                 else {
                     mMap.addPolyline(polylineOptions);
-                    polylineOptions = new PolylineOptions().color(Color.RED);
+                    polylineOptions = new PolylineOptions().color(Color.CYAN);
                     polylineOptionsGrey.add(new LatLng(arrayLatitude.get(i - 1), arrayLongitude.get(i - 1)), new LatLng(arrayLatitude.get(i + 1), arrayLongitude.get(i + 1)));
                     mMap.addPolyline(polylineOptionsGrey);
                     polylineOptionsGrey = new PolylineOptions().color(Color.GRAY);
