@@ -20,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.example.maptest.databinding.ActivityMapInformationBinding;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 
@@ -124,6 +125,8 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
                 arrayLatitude.remove(arrayLatitude.size() - 1);
                 arrayLongitude.remove(arrayLongitude.size() - 1);
             }
+            mMap.addMarker(new MarkerOptions().position(new LatLng(arrayLatitude.get(1), arrayLongitude.get(1))));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(arrayLatitude.get(arrayLatitude.size() - 1), arrayLongitude.get(arrayLatitude.size() - 1))));
             for (int i = 1; i < arrayLatitude.size(); i++) {
                 if (arrayLatitude.get(i) != 0.0)
                     polylineOptions.add(new LatLng(arrayLatitude.get(i), arrayLongitude.get(i)));
