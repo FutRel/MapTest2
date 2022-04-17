@@ -38,7 +38,7 @@
             android:onClick="onClickPlus"
             android:layout_alignParentRight="true"
             android:layout_above="@+id/minus"
-            app:cornerRadius="50dp"
+            app:cornerRadius="10dp"
 
     />
     <com.google.android.material.button.MaterialButton
@@ -53,7 +53,7 @@
             android:onClick="onClickMinus"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            app:cornerRadius="50dp"
+            app:cornerRadius="10dp"
     />
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"

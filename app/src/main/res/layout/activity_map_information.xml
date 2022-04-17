@@ -25,7 +25,7 @@
             android:textColor="@color/black"
             android:backgroundTint="@color/grey_white"
             android:id="@+id/plus"
-            app:cornerRadius="50dp"
+            app:cornerRadius="10dp"
     />
     <com.google.android.material.button.MaterialButton
             android:layout_width="45dp"
@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:textColor="@color/black"
             android:backgroundTint="@color/grey_white"
-            app:cornerRadius="50dp"
+            app:cornerRadius="10dp"
             android:layout_below="@+id/plus"
     />
     <com.google.android.material.button.MaterialButton
