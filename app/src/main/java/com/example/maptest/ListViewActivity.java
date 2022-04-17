@@ -47,7 +47,7 @@ public class ListViewActivity extends AppCompatActivity {
             int time = cursor.getInt(2);
             String date = cursor.getString(3);
             String numberToItem = "№" + counter;
-            String distanceToItem = String.format("%.2f", distance / 1000) + "км";
+            String distanceToItem = String.format("%.2f", distance / 1000) + " км";
             String timeHours = "" + time / 3600;
             if(timeHours.length() == 1) timeHours = "0" + timeHours;
             String timeMin = "" + time % 3600 / 60;
