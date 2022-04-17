@@ -15,7 +15,7 @@ public class StartActivity extends AppCompatActivity {
             final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
             final MediaPlayer mp2 = MediaPlayer.create(this, R.raw.sound2);
             MediaPlayer[] arr = new MediaPlayer[]{mp, mp2};
-            arr[(int)(Math.random()*2)].start();
+            arr[(int)(Math.random()*arr.length)].start();
             TimeUnit.MILLISECONDS.sleep(2500);
             Intent intent2 = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent2);
@@ -23,20 +23,22 @@ public class StartActivity extends AppCompatActivity {
     });
     TextView phrases;
     String[] arrOfPhrases = new String[]{
-            "Счастливого пути!",
-            "Доброго пути!",
-            "Счастливо добраться!",
-            "Комфортной езды!",
-            "Быстрого пути!",
-            "Без приключений!",
-            "В добрый путь!",
-            "Будь внимательней на дороге!",
+            "Счастливого пути",
+            "Доброго пути",
+            "Счастливо добраться",
+            "Комфортной езды",
+            "Быстрого пути",
+            "Без приключений",
+            "В добрый путь",
+            "Будь внимательней на дороге",
             "Удачи на дорогах",
-            "Без бешеных бабулек!",
-            "Попутного ветра!",
-            "Да прибудет с тобой Сила!",
+            "Без бешеных бабулек",
+            "Попутного ветра",
+            "Да прибудет с тобой Сила",
             "Да благославит тебя Всеотец",
-            ""};
+            "Мы вас заждались!",
+            ""
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
