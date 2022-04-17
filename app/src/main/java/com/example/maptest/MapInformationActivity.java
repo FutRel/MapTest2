@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
@@ -27,6 +28,10 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     private GoogleMap mMap;
     private ArrayList<Double> arrayLatitude;
     protected ArrayList<Double> arrayLongitude;
+    TextView tvDist;
+    TextView tvTime;
+    TextView tvDate;
+    TextView tvAvspeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,11 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        tvDist = findViewById(R.id.dist_inf);
+        tvTime = findViewById(R.id.time_inf);
+        tvDate = findViewById(R.id.date_inf);
+        tvAvspeed = findViewById(R.id.avspeed_inf);
 
         RecordsDBHelper rdbHelper = new RecordsDBHelper(this);
         PointsDBHelper pdbHelper = new PointsDBHelper(this);
@@ -61,6 +71,19 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         String date = cursorRDB.getString(3);
         cursorRDB.close();
         Toast.makeText(this, number + " " + idOfRecord + " " + distance + " " + time + " " + date, Toast.LENGTH_LONG).show();
+
+        String timeHours = "" + time / 3600;
+        if(timeHours.length() == 1) timeHours = "0" + timeHours;
+        String timeMin = "" + time % 3600 / 60;
+        if(timeMin.length() == 1) timeMin = "0" + timeMin;
+        String timeSec = "" + time % 3600 % 60;
+        if(timeSec.length() == 1) timeSec = "0" + timeSec;
+        String timeStr = timeHours + ":" + timeMin + ":" + timeSec;
+        float avspeed = distance / time * 3.6f;
+        tvDist.setText(distance + " км");
+        tvTime.setText(timeStr);
+        tvDate.setText(date);
+        tvAvspeed.setText(String.format("%.2f", avspeed) + " км/ч");
 
         SQLiteDatabase pdb = pdbHelper.getReadableDatabase();
         String[] columnsPDB = {
