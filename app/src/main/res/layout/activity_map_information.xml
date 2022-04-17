@@ -5,19 +5,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
                 android:layout_height="match_parent"
-                tools:context=".MapInformationActivity"
                 app:mapType="hybrid">
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-                android:text="Priveeeet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -33,9 +21,9 @@
                 android:layout_centerVertical="true"
                 android:onClick="plus"
                 android:layout_alignParentRight="true"
-                android:layout_above="@+id/min"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/grey_white"
+                android:id="@+id/plus"
                 app:cornerRadius="50dp"
         />
         <com.google.android.material.button.MaterialButton
@@ -51,10 +39,11 @@
                 android:textColor="@color/black"
                 android:backgroundTint="@color/grey_white"
                 app:cornerRadius="50dp"
+                android:layout_below="@+id/plus"
         />
         <com.google.android.material.button.MaterialButton
                 android:backgroundTint="@color/biruze"
-                android:layout_width="85dp"
+                android:layout_width="95dp"
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:text="назад"
@@ -64,5 +53,14 @@
                 android:layout_alignParentRight="true"
                 app:cornerRadius="56dp"
         />
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="Priveeeet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+        />
     </RelativeLayout>
+
 </RelativeLayout>

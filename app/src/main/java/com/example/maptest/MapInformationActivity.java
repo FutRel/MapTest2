@@ -97,7 +97,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
             PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED);
             PolylineOptions polylineOptionsGrey = new PolylineOptions().color(Color.GRAY);
 
-            if (arrayLatitude.get(arrayLatitude.size() - 1) == 0.0){
+            for(int i = 0; i < arrayLatitude.size();i++) if (arrayLatitude.get(arrayLatitude.size() - 1) == 0.0){
                 arrayLatitude.remove(arrayLatitude.size() - 1);
                 arrayLongitude.remove(arrayLongitude.size() - 1);
             }
