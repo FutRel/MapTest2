@@ -80,7 +80,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         if(timeSec.length() == 1) timeSec = "0" + timeSec;
         String timeStr = timeHours + ":" + timeMin + ":" + timeSec;
         float avspeed = distance / time * 3.6f;
-        tvDist.setText(distance + " км");
+        tvDist.setText(String.format("%.2f", distance / 1000) + " км");
         tvTime.setText(timeStr);
         tvDate.setText(date);
         tvAvspeed.setText(String.format("%.2f", avspeed) + " км/ч");

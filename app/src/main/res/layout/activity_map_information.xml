@@ -57,40 +57,60 @@
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+    >
         <TextView
                 android:text="dist"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dist_inf"
-                android:layout_centerHorizontal="true"
+                android:textColor="@color/biruze"
+                android:shadowColor="@color/black"
+                android:shadowRadius="5"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="5dp"
         />
+
         <TextView
                 android:text="time"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:id="@+id/time_inf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dist_inf"
-                android:layout_centerHorizontal="true"
+                android:textColor="@color/biruze"
+                android:shadowColor="@color/black"
+                android:shadowRadius="5"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="5dp"
         />
-        <TextView
-                android:text="date"
-                android:textSize="16sp"
-                android:id="@+id/date_inf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-        />
+
         <TextView
                 android:text="avspeed"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:id="@+id/avspeed_inf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/time_inf"
-                android:layout_centerHorizontal="true"
+                android:textColor="@color/biruze"
+                android:shadowColor="@color/black"
+                android:shadowRadius="5"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="5dp"
+        />
+
+        <TextView
+                android:text="date"
+                android:textSize="16sp"
+                android:id="@+id/date_inf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_alignParentRight="true"
+                android:textStyle="italic"
+                android:shadowColor="@color/biruze"
+                android:shadowRadius="2"
         />
     </RelativeLayout>
 
