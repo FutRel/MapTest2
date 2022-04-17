@@ -9,15 +9,17 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="\n\n AppName!"
+            android:text="\n\n AppName!\n\n\n"
             android:layout_centerHorizontal="true"
+            android:id="@+id/appname"
             android:textSize="25sp"
     />
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/swag"
-            android:layout_centerInParent="true"/>
+            android:src="@drawable/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/appname"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
