@@ -12,14 +12,9 @@ public class StartActivity extends AppCompatActivity {
 
     Thread thread = new Thread(() -> {
         try {
-            final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound);
-            final MediaPlayer mp2 = MediaPlayer.create(this, R.raw.sound2);
-            MediaPlayer[] arr = new MediaPlayer[]{mp, mp2};
-            arr[(int)(Math.random()*arr.length)].start();
-            TimeUnit.MILLISECONDS.sleep(2500);
-            Intent intent2 = new Intent(StartActivity.this, MainActivity.class);
-            startActivity(intent2);
-        } catch (InterruptedException e) {}
+            TimeUnit.MILLISECONDS.sleep(1500);
+            startActivity(new Intent(StartActivity.this, MainActivity.class));
+        } catch (InterruptedException ignored) {}
     });
     TextView phrases;
     String[] arrOfPhrases = new String[]{
@@ -36,8 +31,7 @@ public class StartActivity extends AppCompatActivity {
             "Попутного ветра",
             "Да прибудет с тобой Сила",
             "Да благославит тебя Всеотец",
-            "Мы вас заждались!",
-            ""
+            "SWAAAAG"
     };
 
     @Override
@@ -45,8 +39,10 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_start);
+
         phrases = findViewById(R.id.phrases);
         phrases.setText(arrOfPhrases[(int)(Math.random()* arrOfPhrases.length)]);
+
         thread.start();
     }
 }
