@@ -124,8 +124,6 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
                 arrayLongitude.remove(arrayLongitude.size() - 1);
             }
 
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.start))
-                    .position(new LatLng(arrayLatitude.get(1), arrayLongitude.get(1))));
             mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.stop))
                     .position(new LatLng(arrayLatitude.get(arrayLatitude.size() - 1), arrayLongitude.get(arrayLatitude.size() - 1))));
 

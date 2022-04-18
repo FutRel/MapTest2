@@ -355,7 +355,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             locationManager.removeUpdates(locationListenerWDist);
         }
         else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 250, 5, locationListenerWDist);
             locationManager.removeUpdates(followListenerWDist);
             sensorManager.unregisterListener(sensorEventListener);
 
@@ -404,7 +404,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 4, locationListenerWDist);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 250, 5, locationListenerWDist);
         }
     }
 }
