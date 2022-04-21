@@ -69,7 +69,6 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         int time = cursorRDB.getInt(2);
         String date = cursorRDB.getString(3);
         cursorRDB.close();
-        Toast.makeText(this, number + " " + idOfRecord + " " + distance + " " + time + " " + date, Toast.LENGTH_LONG).show();
 
         String timeHours = "" + time / 3600;
         if(timeHours.length() == 1) timeHours = "0" + timeHours;
