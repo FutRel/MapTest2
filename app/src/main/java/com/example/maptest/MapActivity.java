@@ -53,7 +53,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private double distance = 0;
     private LatLng lastLatLng = null;
     long timeOfStart = 0;
-    int TVTime = 0;
+    int TVTime = 1;
 
     ArrayList<Double> arrayOfLat = new ArrayList<>();
     ArrayList<Double> arrayOfLng = new ArrayList<>();
@@ -73,7 +73,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 try {TimeUnit.SECONDS.sleep(1);
                     time.setText(String.valueOf(TVTime));
                     TVTime++;
-                } catch (InterruptedException e) {}
+                } catch (Exception ignored) {}
             }
             if (!threadBool) break;
         }

@@ -12,10 +12,7 @@ import com.example.maptest.data.PointsContract;
 import com.example.maptest.data.PointsDBHelper;
 import com.example.maptest.data.RecordsContract;
 import com.example.maptest.data.RecordsDBHelper;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapInformationBinding;
 
@@ -107,9 +104,14 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        UiSettings uiSettings = mMap.getUiSettings();
         mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.bl_wh));
+
+        uiSettings.setMapToolbarEnabled(false);
+        uiSettings.setIndoorLevelPickerEnabled(false);
+
         if (arrayLatitude.size() > 0) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arrayLatitude.get(arrayLatitude.size() - 2),
                     arrayLongitude.get(arrayLongitude.size() - 2)), 16));
@@ -122,8 +124,10 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
                 arrayLongitude.remove(arrayLongitude.size() - 1);
             }
 
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.stop))
-                    .position(new LatLng(arrayLatitude.get(arrayLatitude.size() - 1), arrayLongitude.get(arrayLatitude.size() - 1))));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(arrayLatitude.get(arrayLatitude.size() - 1), arrayLongitude.get(arrayLatitude.size() - 1)))
+                    .title("Финиш"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(arrayLatitude.get(1), arrayLongitude.get(1)))
+                    .title("Старт"));
 
             for (int i = 1; i < arrayLatitude.size(); i++) {
                 if (arrayLatitude.get(i) != 0.0)
