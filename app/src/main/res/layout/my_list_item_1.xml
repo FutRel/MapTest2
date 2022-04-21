@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="#E0FFFF"
+        android:background="@color/light_font"
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
@@ -12,49 +12,67 @@
             android:text="№x"
             android:textSize="28sp"
             android:textStyle="normal"
-            android:textColor="@color/biruze"
-            android:shadowColor="@color/black"
+            android:textColor="@color/black"
+            android:shadowColor="@color/biruze"
             android:shadowRadius="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+    />
+
     <TextView
             android:id="@+id/tv_dist"
             android:text="xx,xx km"
             android:textSize="25sp"
             android:textStyle="normal"
-            android:textColor="@color/biruze"
-            android:shadowColor="@color/black"
+            android:textColor="@color/black"
+            android:shadowColor="@color/biruze"
             android:shadowRadius="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
             app:layout_constraintStart_toEndOf="@+id/tv_number"
-            app:layout_constraintEnd_toStartOf="@+id/tv_date" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@+id/tv_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    />
+
     <TextView
             android:id="@+id/tv_time"
             android:text="xx h xx s"
             android:textSize="17sp"
             android:textStyle="italic"
             android:textColor="@color/black"
+            android:shadowColor="@color/biruze"
+            android:shadowRadius="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="16dp" android:layout_marginTop="16dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+    />
+
     <TextView
             android:id="@+id/tv_date"
             android:text="xx.xx.xx xx:xx"
             android:textSize="17sp"
             android:textStyle="italic"
             android:textColor="@color/black"
+            android:shadowColor="@color/biruze"
+            android:shadowRadius="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="16dp" android:layout_marginBottom="16dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

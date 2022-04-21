@@ -44,10 +44,10 @@
     />
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"
-            android:layout_width="95dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="назад"
+            android:text=">"
             android:textSize="13sp"
             android:onClick="back"
             android:layout_alignParentBottom="true"
@@ -56,25 +56,27 @@
     />
 
     <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:background="@color/grey_white"
     >
         <TextView
                 android:text="dist"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dist_inf"
                 android:textColor="@color/biruze"
                 android:shadowColor="@color/black"
                 android:shadowRadius="5"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="9dp"
                 android:layout_marginBottom="5dp"
         />
 
         <TextView
                 android:text="time"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:id="@+id/time_inf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,13 +84,13 @@
                 android:textColor="@color/biruze"
                 android:shadowColor="@color/black"
                 android:shadowRadius="5"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="9dp"
                 android:layout_marginBottom="5dp"
         />
 
         <TextView
                 android:text="avspeed"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:id="@+id/avspeed_inf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,22 +98,24 @@
                 android:textColor="@color/biruze"
                 android:shadowColor="@color/black"
                 android:shadowRadius="5"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="9dp"
                 android:layout_marginBottom="5dp"
         />
-
-        <TextView
-                android:text="date"
-                android:textSize="16sp"
-                android:id="@+id/date_inf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_alignParentRight="true"
-                android:textStyle="italic"
-                android:shadowColor="@color/biruze"
-                android:shadowRadius="2"
-        />
     </RelativeLayout>
+
+    <TextView
+            android:text="date"
+            android:textSize="20sp"
+            android:id="@+id/date_inf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_alignParentRight="true"
+            android:textStyle="italic"
+            android:shadowColor="@color/black"
+            android:textColor="@color/biruze"
+            android:shadowRadius="2"
+            android:background="@color/grey_white"
+    />
 
 </RelativeLayout>

@@ -63,14 +63,11 @@ public class ListViewActivity extends AppCompatActivity {
         if(!arrayListRecords.isEmpty()){
             recyclerView = findViewById(R.id.list);
             recyclerView.addItemDecoration(new RecyclerItemSpace(10));
-            RecordAdapter.OnRecordClickListener recordClickListener = new RecordAdapter.OnRecordClickListener() {
-                @Override
-                public void onRecordClick(RecordForRecycler record, int position) {
-                    Intent intent = new Intent(ListViewActivity.this, MapInformationActivity.class);
-                    intent.putExtra("number", position + 1);
-                    intent.putExtra("idOfRecord", arrayListID.get(position));
-                    startActivity(intent);
-                }
+            RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
+                Intent intent = new Intent(ListViewActivity.this, MapInformationActivity.class);
+                intent.putExtra("number", position + 1);
+                intent.putExtra("idOfRecord", arrayListID.get(position));
+                startActivity(intent);
             };
             RecordAdapter adapter = new RecordAdapter(this, arrayListRecords, recordClickListener);
             recyclerView.setAdapter(adapter);

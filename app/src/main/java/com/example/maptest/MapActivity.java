@@ -65,7 +65,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     Thread thread = new Thread(() -> {
         try {
             TimeUnit.MILLISECONDS.sleep(2000);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException ignored) {}
     });
     Thread timerTest = new Thread(() -> {
         while (true){
@@ -89,16 +89,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
-            float var = ((((int) sensorEvent.values[0] + 1) / 15) * 15);
-            if (t[0] % 40 == 0) {
+            float var = ((((int) sensorEvent.values[0]) / 15) * 15);
+            if (t[0] % 50 == 0) {
                 myMap.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder(myMap
                                 .getCameraPosition())
                         .bearing(var)
                         .build()));
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                }
             }
             t[0]++;
         }

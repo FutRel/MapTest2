@@ -57,7 +57,7 @@
     />
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="привязать"
@@ -72,7 +72,7 @@
 
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/orange"
-            android:layout_width="147dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="старт"
@@ -86,7 +86,7 @@
 
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/design_default_color_error"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="назад"
