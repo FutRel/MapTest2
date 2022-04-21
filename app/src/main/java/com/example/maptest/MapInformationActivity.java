@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
 import com.example.maptest.data.PointsContract;

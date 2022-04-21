@@ -1,7 +1,6 @@
 package com.example.maptest;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
