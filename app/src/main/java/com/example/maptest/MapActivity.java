@@ -63,9 +63,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private PointsDBHelper pdbHelper;
 
     Thread thread = new Thread(() -> {
-        try {
-            TimeUnit.MILLISECONDS.sleep(2000);
-        } catch (InterruptedException ignored) {}
+        try {TimeUnit.MILLISECONDS.sleep(2000);} catch (InterruptedException ignored) {}
     });
     Thread timerTest = new Thread(() -> {
         while (true){
