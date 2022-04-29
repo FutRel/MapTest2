@@ -47,7 +47,6 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         RecordsDBHelper rdbHelper = new RecordsDBHelper(this);
         PointsDBHelper pdbHelper = new PointsDBHelper(this);
         Intent getIntent = getIntent();
-        int number = getIntent.getIntExtra("number", 0);
         int idOfRecord = getIntent.getIntExtra("idOfRecord", 0);
         SQLiteDatabase rdb = rdbHelper.getReadableDatabase();
         String[] columnsRDB = {

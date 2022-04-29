@@ -38,7 +38,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         RecordForRecycler record = records.get(position);
-        holder.tvNumber.setText(record.getNumber());
         holder.tvDistance.setText(record.getDistance());
         holder.tvTime.setText(record.getTime());
         holder.tvDate.setText(record.getDate());
@@ -57,13 +56,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvNumber;
         final TextView tvDistance;
         final TextView tvTime;
         final TextView tvDate;
         ViewHolder(View view){
             super(view);
-            tvNumber = view.findViewById(R.id.tv_number);
             tvDistance = view.findViewById(R.id.tv_dist);
             tvTime = view.findViewById(R.id.tv_time);
             tvDate = view.findViewById(R.id.tv_date);

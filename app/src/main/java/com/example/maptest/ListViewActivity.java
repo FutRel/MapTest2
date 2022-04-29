@@ -37,14 +37,12 @@ public class ListViewActivity extends AppCompatActivity {
                 columns, null, null, null, null, null
         );
         ArrayList<RecordForRecycler> arrayListRecords = new ArrayList<>();
-        ArrayList<Integer> arrayListID = new ArrayList<>();
-        int counter = 1;
+        ArrayList<RecordForRecycler> arrayListRecordsNotSorted = new ArrayList<>();
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
             float distance = cursor.getFloat(1);
             int time = cursor.getInt(2);
-            String date = cursor.getString(3);
-            String numberToItem = "№" + counter;
+            String dateToItem = cursor.getString(3);
             String distanceToItem = String.format("%.2f", distance / 1000) + " км";
             String timeHours = "" + time / 3600;
             if(timeHours.length() == 1) timeHours = "0" + timeHours;
@@ -53,18 +51,18 @@ public class ListViewActivity extends AppCompatActivity {
             String timeSec = "" + time % 3600 % 60;
             if(timeSec.length() == 1) timeSec = "0" + timeSec;
             String timeToItem = timeHours + ":" + timeMin + ":" + timeSec;
-            arrayListRecords.add(new RecordForRecycler(numberToItem, distanceToItem, timeToItem, date));
-            arrayListID.add(id);
-            counter ++;
+            arrayListRecordsNotSorted.add(new RecordForRecycler(id, distanceToItem, timeToItem, dateToItem));
         }
         cursor.close();
-        if(!arrayListRecords.isEmpty()){
+        if(!arrayListRecordsNotSorted.isEmpty()){
+            for (int i = arrayListRecordsNotSorted.size() - 1; i >= 0; i--) {
+                arrayListRecords.add(arrayListRecordsNotSorted.get(i));
+            }
             recyclerView = findViewById(R.id.list);
             recyclerView.addItemDecoration(new RecyclerItemSpace(10));
             RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
                 Intent intent = new Intent(ListViewActivity.this, MapInformationActivity.class);
-                intent.putExtra("number", position + 1);
-                intent.putExtra("idOfRecord", arrayListID.get(position));
+                intent.putExtra("idOfRecord", arrayListRecords.get(position).getId());
                 startActivity(intent);
             };
             RecordAdapter adapter = new RecordAdapter(this, arrayListRecords, recordClickListener);
