@@ -53,7 +53,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private double distance = 0;
     private LatLng lastLatLng = null;
     long timeOfStart = 0;
-    int TVTime = 1;
 
     ArrayList<Double> arrayOfLat = new ArrayList<>();
     ArrayList<Double> arrayOfLng = new ArrayList<>();
@@ -66,11 +65,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         try {TimeUnit.MILLISECONDS.sleep(2000);} catch (InterruptedException ignored) {}
     });
     Thread timerTest = new Thread(() -> {
+        int TVTimeCounter = 1;
+        String TVTimeMin;
+        String TVTimeHour;
+        String TVTimeSec;
         while (true){
             if(pauseOrResume.getText().toString().equals("пауза")) {
-                try {TimeUnit.SECONDS.sleep(1);
-                    time.setText(String.valueOf(TVTime));
-                    TVTime++;
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                    if (TVTimeCounter / 3600 >= 10) TVTimeHour = TVTimeCounter / 3600 + "";
+                    else TVTimeHour = "0" + TVTimeCounter / 3600;
+                    if ((TVTimeCounter % 3600) / 60 >= 10) TVTimeMin = ((TVTimeCounter % 3600) / 60) + "";
+                    else TVTimeMin = "0" + ((TVTimeCounter % 3600) / 60);
+                    if (TVTimeCounter % 60 >= 10) TVTimeSec = TVTimeCounter % 60 + "";
+                    else TVTimeSec = "0" + TVTimeCounter % 60;
+                    String s = TVTimeHour + ":" + TVTimeMin + ":" + TVTimeSec;
+                    time.setText(s);
+                    TVTimeCounter++;
                 } catch (Exception ignored) {}
             }
             if (!threadBool) break;
