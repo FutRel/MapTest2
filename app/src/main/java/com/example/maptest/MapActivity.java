@@ -30,6 +30,7 @@ import com.example.maptest.data.RecordsDBHelper;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
+import com.google.android.material.snackbar.Snackbar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -216,66 +217,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
 
-        stop.setOnClickListener(v -> {
-            if (stop.getText().toString().equals("назад")) {
-                MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
-                threadBool = false;
-            }
-            else Toast.makeText(MapActivity.this, "Удерживайте кнопку чтобы остановить запись", Toast.LENGTH_SHORT).show();
-        });
-        stop.setOnLongClickListener(v -> {
-            threadBool = false;
-            if (arrayOfLat.size() < 2){
-                Toast.makeText(MapActivity.this, "Вы не проехали ни метра\n                      :(", Toast.LENGTH_SHORT).show();
-                sensorManager.unregisterListener(sensorEventListener);
-                locationManager.removeUpdates(followListenerWDist);
-                locationManager.removeUpdates(locationListenerWDist);
-                MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
-                return true;
-            }
-            else{
-                Toast.makeText(MapActivity.this, "Запись окончена", Toast.LENGTH_SHORT).show();
-                sensorManager.unregisterListener(sensorEventListener);
-                locationManager.removeUpdates(followListenerWDist);
-                locationManager.removeUpdates(locationListenerWDist);
-                SQLiteDatabase rdb = rdbHelper.getWritableDatabase();
-                if (lastLatLng != null) arrOfTime.add(System.currentTimeMillis() - timeOfStart);
-
-                SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
-                String date = formatForDateNow.format(data);
-                int time = 0;
-                for (Long aLong : arrOfTime) time += aLong;
-                time /= 1000;
-                ContentValues cvrdb = new ContentValues();
-                cvrdb.put(RecordsContract.ClassForRecords.column_distance, distance);
-                cvrdb.put(RecordsContract.ClassForRecords.column_time, time);
-                cvrdb.put(RecordsContract.ClassForRecords.column_date, date);
-                rdb.insert(RecordsContract.ClassForRecords.table_name, null, cvrdb);
-
-                SQLiteDatabase rdb2 = rdbHelper.getReadableDatabase();
-                String[] columns = {RecordsContract.ClassForRecords._id};
-                Cursor cursor = rdb2.query(
-                        RecordsContract.ClassForRecords.table_name,
-                        columns, null, null, null, null, null
-                );
-                cursor.moveToLast();
-                int recordId = cursor.getInt(0);
-                cursor.close();
-
-                SQLiteDatabase pdb = pdbHelper.getWritableDatabase();
-                for (int i = 0; i < arrayOfLat.size(); i++) {
-                    double latitude = arrayOfLat.get(i);
-                    double longitude = arrayOfLng.get(i);
-                    ContentValues cvpdb = new ContentValues();
-                    cvpdb.put(PointsContract.ClassForPoints.column_latitude, latitude);
-                    cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
-                    cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
-                    pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
-                }
-                MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
-            }
-            return true;
-        });
+        stop.setOnLongClickListener(this::onLongClick);
         timerTest.start();
     }
 
@@ -334,11 +276,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void follow(View view) {
         UiSettings uiSettings = myMap.getUiSettings();
         if(pauseOrResume.getText().toString().equals("продолжить")){
-            Toast.makeText(this, "Сначала продолжите запись", Toast.LENGTH_SHORT).show();
+            Snackbar.make(view, "Сначала продолжите запись", Snackbar.LENGTH_SHORT).show();
             return;
         }
         if(pauseOrResume.getText().toString().equals("старт")){
-            Toast.makeText(this, "Сначала начните запись", Toast.LENGTH_SHORT).show();
+            Snackbar.make(view, "Сначала начните запись", Snackbar.LENGTH_SHORT).show();
             return;
         }
         if (follow.getText().toString().equals("привязать")) {
@@ -411,5 +353,60 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 250, 5, locationListenerWDist);
         }
+    }
+
+    public void back (View view){
+        if (stop.getText().toString().equals("назад")) {
+            MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
+            threadBool = false;
+        }
+        else Toast.makeText(MapActivity.this, "Удерживайте кнопку чтобы остановить запись", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean onLongClick(View view) {
+        threadBool = false;
+        sensorManager.unregisterListener(sensorEventListener);
+        locationManager.removeUpdates(followListenerWDist);
+        locationManager.removeUpdates(locationListenerWDist);
+        if (stop.getText().toString().equals("назад")) return true;
+        if (arrayOfLat.size() < 2) Toast.makeText(this, "Запись не завершена", Toast.LENGTH_LONG).show();
+        else {
+            SQLiteDatabase rdb = rdbHelper.getWritableDatabase();
+            if (lastLatLng != null) arrOfTime.add(System.currentTimeMillis() - timeOfStart);
+
+            SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
+            String date = formatForDateNow.format(data);
+            int time = 0;
+            for (Long aLong : arrOfTime) time += aLong;
+            time /= 1000;
+            ContentValues cvrdb = new ContentValues();
+            cvrdb.put(RecordsContract.ClassForRecords.column_distance, distance);
+            cvrdb.put(RecordsContract.ClassForRecords.column_time, time);
+            cvrdb.put(RecordsContract.ClassForRecords.column_date, date);
+            rdb.insert(RecordsContract.ClassForRecords.table_name, null, cvrdb);
+
+            SQLiteDatabase rdb2 = rdbHelper.getReadableDatabase();
+            String[] columns = {RecordsContract.ClassForRecords._id};
+            Cursor cursor = rdb2.query(
+                    RecordsContract.ClassForRecords.table_name,
+                    columns, null, null, null, null, null
+            );
+            cursor.moveToLast();
+            int recordId = cursor.getInt(0);
+            cursor.close();
+
+            SQLiteDatabase pdb = pdbHelper.getWritableDatabase();
+            for (int i = 0; i < arrayOfLat.size(); i++) {
+                double latitude = arrayOfLat.get(i);
+                double longitude = arrayOfLng.get(i);
+                ContentValues cvpdb = new ContentValues();
+                cvpdb.put(PointsContract.ClassForPoints.column_latitude, latitude);
+                cvpdb.put(PointsContract.ClassForPoints.column_longitude, longitude);
+                cvpdb.put(PointsContract.ClassForPoints.column_recordId, recordId);
+                pdb.insert(PointsContract.ClassForPoints.table_name, null, cvpdb);
+            }
+        }
+        MapActivity.this.startActivity(new Intent(MapActivity.this, MainActivity.class));
+        return true;
     }
 }

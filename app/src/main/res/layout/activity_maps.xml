@@ -5,8 +5,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
                 android:layout_height="match_parent"
-                tools:context=".MapActivity"
-                app:mapType="hybrid">
+                tools:context=".MapActivity">
     <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -16,15 +15,16 @@
     />
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"
-            android:layout_width="89dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="найти"
             android:textSize="13sp"
             android:onClick="onClick"
-            android:layout_alignParentBottom="false"
             android:layout_alignParentRight="true"
+            android:id="@+id/found"
             app:cornerRadius="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="20dp"
     />
     <com.google.android.material.button.MaterialButton
             android:layout_width="45dp"
@@ -66,8 +66,9 @@
             android:onClick="follow"
             android:layout_alignParentRight="true"
             app:cornerRadius="56dp"
-            android:layout_above="@+id/linear"
-
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="3dp"
     />
 
     <com.google.android.material.button.MaterialButton
@@ -80,8 +81,9 @@
             android:id="@+id/pauseOrResume"
             android:onClick="pauseOrResume"
             app:cornerRadius="56dp"
-            android:layout_above="@+id/linear"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="3dp"
     />
 
     <com.google.android.material.button.MaterialButton
@@ -92,17 +94,22 @@
             android:text="назад"
             android:textSize="13sp"
             android:id="@+id/stop"
-            android:layout_alignParentRight="false"
             app:cornerRadius="56dp"
-            android:layout_above="@+id/linear"
+            android:onClick="back"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="3dp"
     />
 
     <RelativeLayout
-            android:background="@color/black"
+            android:background="@drawable/layout_bl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:id="@+id/linear"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
         <TextView
                 android:layout_width="wrap_content"
@@ -118,9 +125,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00:00:00"
+                android:textSize="20dp"
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:id="@+id/time"
+                android:textStyle="italic"
                 android:layout_below="@+id/distanse"
                 android:layout_centerHorizontal="true"
         />
