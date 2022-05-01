@@ -283,7 +283,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             Snackbar.make(view, "Сначала начните запись", Snackbar.LENGTH_SHORT).show();
             return;
         }
-        if (follow.getText().toString().equals("привязать")) {
+        if (follow.getText().toString().equals("следить")) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
@@ -292,7 +292,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, myMap.getCameraPosition().zoom));
 
-            follow.setText("отвязать");
+            follow.setText("не следить");
             uiSettings.setZoomGesturesEnabled(false);
             uiSettings.setScrollGesturesEnabled(false);
             uiSettings.setRotateGesturesEnabled(false);
@@ -306,7 +306,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             locationManager.removeUpdates(followListenerWDist);
             sensorManager.unregisterListener(sensorEventListener);
 
-            follow.setText("привязать");
+            follow.setText("следить");
             uiSettings.setZoomGesturesEnabled(true);
             uiSettings.setScrollGesturesEnabled(true);
             uiSettings.setRotateGesturesEnabled(true);
