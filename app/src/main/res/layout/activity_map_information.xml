@@ -58,7 +58,7 @@
     <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_bg"
+            android:background="@drawable/layout_bg_grey"
             android:layout_alignParentBottom="true"
     >
         <TextView
@@ -115,7 +115,7 @@
             android:shadowColor="@color/black"
             android:textColor="@color/biruze"
             android:shadowRadius="2"
-            android:background="@drawable/layout_bg"
+            android:background="@drawable/layout_bg_grey"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
     />

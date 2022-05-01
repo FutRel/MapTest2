@@ -102,7 +102,7 @@
     />
 
     <RelativeLayout
-            android:background="@drawable/layout_bl"
+            android:background="@drawable/layout_bg_bl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linear"
