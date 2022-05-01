@@ -1,5 +1,7 @@
 package com.example.maptest.recycler;
 
+import java.util.Comparator;
+
 public class RecordForRecycler {
 
     private int id;
@@ -13,6 +15,50 @@ public class RecordForRecycler {
         this.time = time;
         this.date = date;
     }
+
+    public static final Comparator<RecordForRecycler> compareByDist = new Comparator<RecordForRecycler>() {
+        @Override
+        public int compare(RecordForRecycler rfr1, RecordForRecycler rfr2) {
+            return (int)(Float.parseFloat(rfr1.getDistance()) - Float.parseFloat(rfr2.getDistance()));
+        }
+    };
+
+    public static final Comparator<RecordForRecycler> compareByDistReversed = new Comparator<RecordForRecycler>() {
+        @Override
+        public int compare(RecordForRecycler rfr1, RecordForRecycler rfr2) {
+            return (int)(Float.parseFloat(rfr2.getDistance()) - Float.parseFloat(rfr1.getDistance()));
+        }
+    };
+
+    public static final Comparator<RecordForRecycler> compareByTime = new Comparator<RecordForRecycler>() {
+        @Override
+        public int compare(RecordForRecycler rfr1, RecordForRecycler rfr2) {
+            int h1 = Integer.parseInt(rfr1.getTime().substring(0,2)) * 3600;
+            int h2 = Integer.parseInt(rfr2.getTime().substring(0,2)) * 3600;
+            int m1 = Integer.parseInt(rfr1.getTime().substring(3,5)) * 60;
+            int m2 = Integer.parseInt(rfr2.getTime().substring(3,5)) * 60;
+            int s1 = Integer.parseInt(rfr1.getTime().substring(6,8));
+            int s2 = Integer.parseInt(rfr2.getTime().substring(6,8));
+            int time1 = h1 + m1 + s1;
+            int time2 = h2 + m2 + s2;
+            return time1 - time2;
+        }
+    };
+
+    public static final Comparator<RecordForRecycler> compareByTimeReversed = new Comparator<RecordForRecycler>() {
+        @Override
+        public int compare(RecordForRecycler rfr1, RecordForRecycler rfr2) {
+            int h1 = Integer.parseInt(rfr1.getTime().substring(0,2)) * 3600;
+            int h2 = Integer.parseInt(rfr2.getTime().substring(0,2)) * 3600;
+            int m1 = Integer.parseInt(rfr1.getTime().substring(3,5)) * 60;
+            int m2 = Integer.parseInt(rfr2.getTime().substring(3,5)) * 60;
+            int s1 = Integer.parseInt(rfr1.getTime().substring(6,8));
+            int s2 = Integer.parseInt(rfr2.getTime().substring(6,8));
+            int time1 = h1 + m1 + s1;
+            int time2 = h2 + m2 + s2;
+            return time2 - time1;
+        }
+    };
 
     public int getId() {
         return id;
