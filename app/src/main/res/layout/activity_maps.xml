@@ -15,16 +15,15 @@
     />
     <com.google.android.material.button.MaterialButton
             android:backgroundTint="@color/biruze"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="найти"
-            android:textSize="13sp"
+            android:layout_width="25dp"
+            android:layout_height="35dp"
             android:onClick="onClick"
             android:layout_alignParentRight="true"
             android:id="@+id/found"
             app:cornerRadius="50dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/minus"
+            android:layout_marginTop="15dp"
     />
     <com.google.android.material.button.MaterialButton
             android:layout_width="45dp"
@@ -113,7 +112,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/linear"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
