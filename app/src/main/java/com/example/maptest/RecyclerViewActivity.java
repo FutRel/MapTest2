@@ -67,12 +67,6 @@ public class RecyclerViewActivity extends AppCompatActivity {
             totalDistance += distance;
         }
         cursor.close();
-        //
-        arrayListRecordsNotReversed.add(new RecordForRecycler(1, "10.43 км", "10:32:47", "16.05.1989 04:20"));
-        arrayListRecordsNotReversed.add(new RecordForRecycler(2, "30.21 км", "05:04:52", "16.03.2002 14:48"));
-        arrayListRecordsNotReversed.add(new RecordForRecycler(3, "20.14 км", "08:09:29", "27.03.2002 19:00"));
-        arrayListRecordsNotReversed.add(new RecordForRecycler(4, "40.89 км", "07:11:09", "15.04.2005 13:37"));
-        //
         tvTotalDist = findViewById(R.id.arvdist);
         tvTotalDist.setText(String.format("%.2f", totalDistance / 1000) + " км");
         if(!arrayListRecordsNotReversed.isEmpty()){
