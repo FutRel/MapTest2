@@ -30,7 +30,6 @@ import com.example.maptest.data.RecordsDBHelper;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapsBinding;
-import com.google.android.material.snackbar.Snackbar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -276,11 +275,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void follow(View view) {
         UiSettings uiSettings = myMap.getUiSettings();
         if(pauseOrResume.getText().toString().equals("продолжить")){
-            Snackbar.make(view, "Сначала продолжите запись", Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(this, "Сначала продолжите запись", Toast.LENGTH_SHORT).show();
             return;
         }
         if(pauseOrResume.getText().toString().equals("старт")){
-            Snackbar.make(view, "Сначала начните запись", Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(this, "Сначала начните запись", Toast.LENGTH_SHORT).show();
             return;
         }
         if (follow.getText().toString().equals("следить")) {
@@ -324,6 +323,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (pauseOrResume.getText().toString().equals("старт")) {
             timeOfStart = System.currentTimeMillis();
             data = new Date();
+            stop.setText("стоп");
         }
         if (pauseOrResume.getText().toString().equals("пауза")) {
             arrOfTime.add(System.currentTimeMillis() - timeOfStart);
@@ -332,7 +332,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             locationManager.removeUpdates(locationListenerWDist);
             lastLatLng = null;
 
-            follow.setText("привязать");
+            follow.setText("следить");
             uiSettings.setZoomGesturesEnabled(true);
             uiSettings.setScrollGesturesEnabled(true);
             uiSettings.setRotateGesturesEnabled(true);
@@ -347,7 +347,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         else {
             timeOfStart = System.currentTimeMillis();
             pauseOrResume.setText("пауза");
-            stop.setText("стоп");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;

@@ -12,7 +12,7 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="166dp"
-            android:background="@drawable/layout_bg_grey"
+            android:background="@drawable/layout_bg_white_w_cyan"
             android:layout_marginTop="5dp"
             android:id="@+id/rl1">
 

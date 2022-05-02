@@ -33,8 +33,7 @@
             android:textSize="20sp"
             android:layout_centerVertical="true"
             android:id="@+id/plus"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/grey_white"
+            android:backgroundTint="@color/black"
             android:onClick="onClickPlus"
             android:layout_alignParentRight="true"
             android:layout_above="@+id/minus"
@@ -48,8 +47,7 @@
             android:text="-"
             android:textSize="20sp"
             android:id="@+id/minus"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/grey_white"
+            android:backgroundTint="@color/black"
             android:onClick="onClickMinus"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -64,7 +62,7 @@
 
         <com.google.android.material.button.MaterialButton
                 android:backgroundTint="@color/biruze"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="следить"
@@ -80,7 +78,7 @@
 
         <com.google.android.material.button.MaterialButton
                 android:backgroundTint="@color/orange"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="старт"
