@@ -19,14 +19,26 @@ public class RecordForRecycler {
     public static final Comparator<RecordForRecycler> compareByDist = new Comparator<RecordForRecycler>() {
         @Override
         public int compare(RecordForRecycler rfr1, RecordForRecycler rfr2) {
-            return (int)(Float.parseFloat(rfr1.getDistance().substring(0,5)) - Float.parseFloat(rfr2.getDistance().substring(0,5)));
+            int index1 = rfr1.getDistance().indexOf(',');
+            int index2 = rfr2.getDistance().indexOf(',');
+            int km1 = Integer.parseInt(rfr1.getDistance().substring(0, index1)) * 1000;
+            int km2 = Integer.parseInt(rfr2.getDistance().substring(0, index2)) * 1000;
+            int m1 = Integer.parseInt(rfr1.getDistance().substring(index1 + 1, index1 + 3)) * 10;
+            int m2 = Integer.parseInt(rfr2.getDistance().substring(index2 + 1, index2 + 3)) * 10;
+            return km1 + m1 - km2 - m2;
         }
     };
 
     public static final Comparator<RecordForRecycler> compareByDistReversed = new Comparator<RecordForRecycler>() {
         @Override
         public int compare(RecordForRecycler rfr1, RecordForRecycler rfr2) {
-            return (int)(Float.parseFloat(rfr2.getDistance().substring(0,5)) - Float.parseFloat(rfr1.getDistance().substring(0,5)));
+            int index1 = rfr1.getDistance().indexOf(',');
+            int index2 = rfr2.getDistance().indexOf(',');
+            int km1 = Integer.parseInt(rfr1.getDistance().substring(0, index1)) * 1000;
+            int km2 = Integer.parseInt(rfr2.getDistance().substring(0, index2)) * 1000;
+            int m1 = Integer.parseInt(rfr1.getDistance().substring(index1 + 1, index1 + 3)) * 10;
+            int m2 = Integer.parseInt(rfr2.getDistance().substring(index2 + 1, index2 + 3)) * 10;
+            return km2 + m2 - km1 - m1;
         }
     };
 
