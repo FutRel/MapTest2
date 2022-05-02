@@ -228,7 +228,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         myMap.setBuildingsEnabled(false);
         myMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.bl_wh));
+                        this, R.raw.theme));
 
         uiSettings.setMapToolbarEnabled(false);
         uiSettings.setIndoorLevelPickerEnabled(false);
@@ -264,12 +264,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public void onClickPlus(View view) {
-        if (follow.getText().toString().equals("привязать")) myMap.animateCamera(CameraUpdateFactory.zoomIn());
+        if (follow.getText().toString().equals("следить")) myMap.animateCamera(CameraUpdateFactory.zoomIn());
         else myMap.moveCamera(CameraUpdateFactory.zoomIn());
     }
 
     public void onClickMinus(View view) {
-        if (follow.getText().toString().equals("привязать")) myMap.animateCamera(CameraUpdateFactory.zoomOut());
+        if (follow.getText().toString().equals("следить")) myMap.animateCamera(CameraUpdateFactory.zoomOut());
         else myMap.moveCamera(CameraUpdateFactory.zoomOut());
     }
 
