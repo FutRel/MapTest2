@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:background="#FFFAFA"
+        tools:context=".RecyclerViewActivity">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:background="@drawable/layout_bg_grey"
+            android:id="@+id/rl1">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Всего преодолено:"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textColor="@color/biruze"
+                android:shadowColor="@color/black"
+                android:shadowRadius="9"
+                android:layout_above="@+id/arvdist"
+                android:layout_marginLeft="10dp"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/arvdist"
+                android:text="xx,xx км"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:textColor="@color/biruze"
+                android:shadowColor="@color/black"
+                android:shadowRadius="9"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvsort"
+                android:layout_toLeftOf="@id/rg"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="16dp"
+                android:text="Сортировать по:"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+        />
+
+        <RadioGroup
+                android:theme="@style/MyRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/rg">
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:id="@+id/rb1"
+                    android:text="дистанции"
+            />
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:id="@+id/rb2"
+                    android:text="времени"
+            />
+        </RadioGroup>
+
+        <androidx.appcompat.widget.SwitchCompat
+                android:theme="@style/MySwitchCompatTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchcompat"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/rg"
+                android:layout_marginRight="5dp"
+                android:text="Обратный порядок"
+                android:textSize="14sp"
+        />
+
+        <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
+                android:text="сортировать"
+                android:textSize="12sp"
+                android:onClick="sortirovka"
+                app:cornerRadius="56dp"
+        />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rl1"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rl2">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/list"
+        />
+
+        <com.google.android.material.button.MaterialButton
+                android:backgroundTint="@color/biruze"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=">"
+                android:textSize="13sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                app:cornerRadius="56dp"
+                android:onClick="intentToMA"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    </RelativeLayout>
+
+</RelativeLayout>

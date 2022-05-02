@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void intentToLV(View view){
-        Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+        Intent intent = new Intent(MainActivity.this, RecyclerViewActivity.class);
         startActivity(intent);
     }
 }

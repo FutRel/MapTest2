@@ -19,14 +19,14 @@ public class RecordForRecycler {
     public static final Comparator<RecordForRecycler> compareByDist = new Comparator<RecordForRecycler>() {
         @Override
         public int compare(RecordForRecycler rfr1, RecordForRecycler rfr2) {
-            return (int)(Float.parseFloat(rfr1.getDistance()) - Float.parseFloat(rfr2.getDistance()));
+            return (int)(Float.parseFloat(rfr1.getDistance().substring(0,5)) - Float.parseFloat(rfr2.getDistance().substring(0,5)));
         }
     };
 
     public static final Comparator<RecordForRecycler> compareByDistReversed = new Comparator<RecordForRecycler>() {
         @Override
         public int compare(RecordForRecycler rfr1, RecordForRecycler rfr2) {
-            return (int)(Float.parseFloat(rfr2.getDistance()) - Float.parseFloat(rfr1.getDistance()));
+            return (int)(Float.parseFloat(rfr2.getDistance().substring(0,5)) - Float.parseFloat(rfr1.getDistance().substring(0,5)));
         }
     };
 

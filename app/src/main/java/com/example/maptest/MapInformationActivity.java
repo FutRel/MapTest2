@@ -143,7 +143,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         }
     }
 
-    public void back(View view){startActivity(new Intent(MapInformationActivity.this, ListViewActivity.class));}
+    public void back(View view){startActivity(new Intent(MapInformationActivity.this, RecyclerViewActivity.class));}
     public void plus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomIn());}
     public void minus(View view) {mMap.animateCamera(CameraUpdateFactory.zoomOut());}
 }
