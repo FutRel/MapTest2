@@ -18,6 +18,7 @@ import com.example.maptest.recycler.RecordForRecycler;
 import com.example.maptest.recycler.RecyclerItemSpace;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RecyclerViewActivity extends AppCompatActivity {
 
@@ -35,9 +36,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recycler_view);
         switchCompat = findViewById(R.id.switchcompat);
         radioGroup = findViewById(R.id.rg);
-        RadioButton rb = findViewById(R.id.rb1);
-        rb.setChecked(true);
-        arrayListRecords = new ArrayList<>();
+        RadioButton rb3 = findViewById(R.id.rb3);
+        rb3.setChecked(true);
         rdbHelper = new RecordsDBHelper(this);
         SQLiteDatabase db = rdbHelper.getReadableDatabase();
         String[] columns = {
@@ -50,6 +50,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 columns, null, null, null, null, null
         );
         ArrayList<RecordForRecycler> arrayListRecordsNotReversed = new ArrayList<>();
+        arrayListRecords = new ArrayList<>();
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
             float distance = cursor.getFloat(1);
@@ -90,8 +91,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void sortirovka(View view){
-        ArrayList<RecordForRecycler> arrayList = arrayListRecords;
+    public void mysort(View view){
+        ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
         if(!switchCompat.isChecked() && radioGroup.getCheckedRadioButtonId() == R.id.rb1){
             arrayList.sort(RecordForRecycler.compareByDist);
         }
@@ -104,9 +105,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         if(switchCompat.isChecked() && radioGroup.getCheckedRadioButtonId() == R.id.rb2){
             arrayList.sort(RecordForRecycler.compareByTimeReversed);
         }
+        if(switchCompat.isChecked() && radioGroup.getCheckedRadioButtonId() == R.id.rb3){
+            Collections.reverse(arrayList);
+        }
         RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
             Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
-            intent.putExtra("idOfRecord", arrayListRecords.get(position).getId());
+            intent.putExtra("idOfRecord", arrayList.get(position).getId());
             startActivity(intent);
         };
         RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
