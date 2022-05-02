@@ -61,7 +61,7 @@
 
         <com.google.android.material.button.MaterialButton
                 android:backgroundTint="@color/biruze"
-                android:layout_width="120dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="следить"
@@ -92,7 +92,7 @@
 
         <com.google.android.material.button.MaterialButton
                 android:backgroundTint="@color/design_default_color_error"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="назад"
