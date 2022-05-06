@@ -121,7 +121,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-            android:background="@drawable/layout_bg_bl"
+            android:background="@drawable/layout_bg_bl_w_transpar_corn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linear"
