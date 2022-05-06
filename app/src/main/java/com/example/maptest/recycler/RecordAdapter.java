@@ -42,12 +42,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         holder.tvTime.setText(record.getTime());
         holder.tvDate.setText(record.getDate());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onRecordClickListener.onRecordClick(record, position);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> onRecordClickListener.onRecordClick(record, position));
     }
 
     @Override
