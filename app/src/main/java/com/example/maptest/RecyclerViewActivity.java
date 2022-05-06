@@ -90,7 +90,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         }
     }
 
-    public void intentToMA(View view){startActivity(new Intent(RecyclerViewActivity.this, MainActivity.class));}
+    public void back(View view){startActivity(new Intent(RecyclerViewActivity.this, MainActivity.class));}
 
     public void sortDist(View view){
         ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
