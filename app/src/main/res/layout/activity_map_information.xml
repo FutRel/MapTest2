@@ -105,7 +105,7 @@
 
     <TextView
             android:text="date"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:id="@+id/date_inf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,8 +116,8 @@
             android:textColor="@color/biruze"
             android:shadowRadius="2"
             android:background="@drawable/layout_bg_grey"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
     />
 
 </RelativeLayout>

@@ -106,7 +106,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         UiSettings uiSettings = mMap.getUiSettings();
         mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.bl_wh));
+                        this, R.raw.theme));
 
         uiSettings.setMapToolbarEnabled(false);
         uiSettings.setIndoorLevelPickerEnabled(false);
