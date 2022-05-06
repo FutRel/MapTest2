@@ -21,15 +21,14 @@ import java.util.Collections;
 
 public class RecyclerViewActivity extends AppCompatActivity {
 
-    private RecordsDBHelper rdbHelper;
     private RecyclerView recyclerView;
     private float totalDistance = 0;
     public TextView tvTotalDist;
     public RadioGroup radioGroup;
     public ArrayList<RecordForRecycler> arrayListRecords;
-    private boolean sortdistFlag = true;
-    private boolean sorttimeFlag = true;
-    private boolean sortdateFlag = true;
+    private boolean sortDistFlag = true;
+    private boolean sortTimeFlag = true;
+    private boolean sortDateFlag = true;
     RadioButton rb1;
     RadioButton rb2;
     RadioButton rb3;
@@ -43,7 +42,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         rb2 = findViewById(R.id.rb2);
         rb3 = findViewById(R.id.rb3);
         rb3.setChecked(true);
-        rdbHelper = new RecordsDBHelper(this);
+        RecordsDBHelper rdbHelper = new RecordsDBHelper(this);
         SQLiteDatabase db = rdbHelper.getReadableDatabase();
         String[] columns = {
                 RecordsContract.ClassForRecords._id,
@@ -91,19 +90,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         }
     }
 
-    public void intentToMA(View view){
-        Intent intent = new Intent(RecyclerViewActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
+    public void intentToMA(View view){startActivity(new Intent(RecyclerViewActivity.this, MainActivity.class));}
 
     public void sortDist(View view){
         ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-        if(sortdistFlag) {
-            arrayList.sort(RecordForRecycler.compareByDistReversed);
-        }
-        else {
-            arrayList.sort(RecordForRecycler.compareByDist);
-        }
+        if(sortDistFlag) arrayList.sort(RecordForRecycler.compareByDistReversed);
+        else arrayList.sort(RecordForRecycler.compareByDist);
         RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
             Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
             intent.putExtra("idOfRecord", arrayList.get(position).getId());
@@ -111,12 +103,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         };
         RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
         recyclerView.setAdapter(adapter);
-        sortdistFlag = !sortdistFlag;
+        sortDistFlag = !sortDistFlag;
     }
 
     public void sortTime(View view){
         ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-        if(sorttimeFlag) arrayList.sort(RecordForRecycler.compareByTimeReversed);
+        if(sortTimeFlag) arrayList.sort(RecordForRecycler.compareByTimeReversed);
         else arrayList.sort(RecordForRecycler.compareByTime);
         RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
             Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
@@ -125,12 +117,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         };
         RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
         recyclerView.setAdapter(adapter);
-        sorttimeFlag = !sorttimeFlag;
+        sortTimeFlag = !sortTimeFlag;
     }
 
     public void sortDate(View view){
         ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-        if(!sortdateFlag) Collections.reverse(arrayList);
+        if(!sortDateFlag) Collections.reverse(arrayList);
         RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
             Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
             intent.putExtra("idOfRecord", arrayList.get(position).getId());
@@ -138,7 +130,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         };
         RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
         recyclerView.setAdapter(adapter);
-        sortdateFlag = !sortdateFlag;
+        sortDateFlag = !sortDateFlag;
 
     }
 }
