@@ -1,6 +1,5 @@
 package com.example.maptest;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,9 +8,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.maptest.data.RecordsContract;
 import com.example.maptest.data.RecordsDBHelper;
@@ -99,7 +96,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void sortdist (View view){
+    public void sortDist(View view){
         ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
         if(sortdistFlag) {
             arrayList.sort(RecordForRecycler.compareByDistReversed);
@@ -117,7 +114,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         sortdistFlag = !sortdistFlag;
     }
 
-    public void sorttime (View view){
+    public void sortTime(View view){
         ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
         if(sorttimeFlag) arrayList.sort(RecordForRecycler.compareByTimeReversed);
         else arrayList.sort(RecordForRecycler.compareByTime);
@@ -131,7 +128,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         sorttimeFlag = !sorttimeFlag;
     }
 
-    public void sortdate (View view){
+    public void sortDate(View view){
         ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
         if(!sortdateFlag) Collections.reverse(arrayList);
         RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
