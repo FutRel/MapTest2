@@ -15,24 +15,38 @@
             android:background="@drawable/layout_bg_white_w_cyan_w_no_round"
             android:id="@+id/rl1">
 
-        <TextView
-                android:layout_width="wrap_content"
+        <Button
+                android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:text="Всего:"
-                android:textSize="16sp"
-                android:textStyle="italic"
-                android:textColor="@color/biruze"
-                android:shadowColor="@color/black"
-                android:shadowRadius="9"
-                android:layout_above="@+id/arvdist"
-                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="->"
+                android:textSize="13sp"
+                android:onClick="back"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentRight="true"
+                android:id="@+id/back"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="8dp"
         />
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:text="Всего:"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:textColor="@color/biruze"
+                android:shadowColor="@color/black"
+                android:shadowRadius="9"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="18dp"
+                android:id="@+id/all"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/arvdist"
                 android:text="xx,xx км"
                 android:textSize="36sp"
@@ -40,49 +54,50 @@
                 android:textColor="@color/biruze"
                 android:shadowColor="@color/black"
                 android:shadowRadius="9"
+                android:layout_toRightOf="@+id/all"
+                android:layout_marginTop="3dp"
         />
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvsort"
-                android:layout_toLeftOf="@id/rg"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="2dp"
                 android:text="Сортировать по:"
                 android:textSize="14sp"
                 android:textColor="@color/black"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="120dp"
         />
 
         <RadioGroup
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="48dp"
+                android:layout_toRightOf="@+id/tvsort"
                 android:id="@+id/rg">
             <RadioButton
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="24dp"
                     android:id="@+id/rb1"
-                    android:text="дистанции"
+                    android:text="Дистанции"
                     android:onClick="sortDist"
                     android:theme="@style/MyRadioButton"
             />
             <RadioButton
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="24dp"
                     android:id="@+id/rb2"
-                    android:text="времени"
+                    android:text="Времени"
                     android:onClick="sortTime"
                     android:theme="@style/MyRadioButton"
             />
             <RadioButton
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="24dp"
                     android:id="@+id/rb3"
-                    android:text="дате"
+                    android:text="Дате"
                     android:onClick="sortDate"
                     android:theme="@style/MyRadioButton"
             />
@@ -102,22 +117,6 @@
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:id="@+id/list"
-        />
-
-        <com.google.android.material.button.MaterialButton
-                android:backgroundTint="@color/biruze"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text=">"
-                android:textSize="13sp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                app:cornerRadius="56dp"
-                android:onClick="intentToMA"
-                tools:ignore="MissingConstraints"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
         />
 
     </RelativeLayout>
