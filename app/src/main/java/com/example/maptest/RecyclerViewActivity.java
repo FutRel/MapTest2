@@ -1,5 +1,6 @@
 package com.example.maptest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,17 +28,23 @@ public class RecyclerViewActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private float totalDistance = 0;
     public TextView tvTotalDist;
-    public SwitchCompat switchCompat;
     public RadioGroup radioGroup;
     public ArrayList<RecordForRecycler> arrayListRecords;
+    private boolean sortdistFlag = true;
+    private boolean sorttimeFlag = true;
+    private boolean sortdateFlag = true;
+    RadioButton rb1;
+    RadioButton rb2;
+    RadioButton rb3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
-        switchCompat = findViewById(R.id.switchcompat);
         radioGroup = findViewById(R.id.rg);
-        RadioButton rb3 = findViewById(R.id.rb3);
+        rb1 = findViewById(R.id.rb1);
+        rb2 = findViewById(R.id.rb2);
+        rb3 = findViewById(R.id.rb3);
         rb3.setChecked(true);
         rdbHelper = new RecordsDBHelper(this);
         SQLiteDatabase db = rdbHelper.getReadableDatabase();
@@ -91,22 +99,13 @@ public class RecyclerViewActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void mysort(View view){
+    public void sortdist (View view){
         ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-        if(!switchCompat.isChecked() && radioGroup.getCheckedRadioButtonId() == R.id.rb1){
-            arrayList.sort(RecordForRecycler.compareByDist);
-        }
-        if(!switchCompat.isChecked() && radioGroup.getCheckedRadioButtonId() == R.id.rb2){
-            arrayList.sort(RecordForRecycler.compareByTime);
-        }
-        if(switchCompat.isChecked() && radioGroup.getCheckedRadioButtonId() == R.id.rb1){
+        if(sortdistFlag) {
             arrayList.sort(RecordForRecycler.compareByDistReversed);
         }
-        if(switchCompat.isChecked() && radioGroup.getCheckedRadioButtonId() == R.id.rb2){
-            arrayList.sort(RecordForRecycler.compareByTimeReversed);
-        }
-        if(switchCompat.isChecked() && radioGroup.getCheckedRadioButtonId() == R.id.rb3){
-            Collections.reverse(arrayList);
+        else {
+            arrayList.sort(RecordForRecycler.compareByDist);
         }
         RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
             Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
@@ -115,5 +114,34 @@ public class RecyclerViewActivity extends AppCompatActivity {
         };
         RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
         recyclerView.setAdapter(adapter);
+        sortdistFlag = !sortdistFlag;
+    }
+
+    public void sorttime (View view){
+        ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
+        if(sorttimeFlag) arrayList.sort(RecordForRecycler.compareByTimeReversed);
+        else arrayList.sort(RecordForRecycler.compareByTime);
+        RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
+            Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
+            intent.putExtra("idOfRecord", arrayList.get(position).getId());
+            startActivity(intent);
+        };
+        RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
+        recyclerView.setAdapter(adapter);
+        sorttimeFlag = !sorttimeFlag;
+    }
+
+    public void sortdate (View view){
+        ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
+        if(!sortdateFlag) Collections.reverse(arrayList);
+        RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
+            Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
+            intent.putExtra("idOfRecord", arrayList.get(position).getId());
+            startActivity(intent);
+        };
+        RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
+        recyclerView.setAdapter(adapter);
+        sortdateFlag = !sortdateFlag;
+
     }
 }

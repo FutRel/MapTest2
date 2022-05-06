@@ -11,7 +11,7 @@
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="166dp"
+            android:layout_height="120dp"
             android:background="@drawable/layout_bg_white_w_cyan_w_no_round"
             android:id="@+id/rl1">
 
@@ -47,18 +47,18 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvsort"
                 android:layout_toLeftOf="@id/rg"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="2dp"
-                android:layout_marginTop="28dp"
                 android:text="Сортировать по:"
                 android:textSize="14sp"
                 android:textColor="@color/black"
         />
 
         <RadioGroup
-                android:theme="@style/MyRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/rg">
@@ -67,45 +67,26 @@
                     android:layout_height="22dp"
                     android:id="@+id/rb1"
                     android:text="дистанции"
+                    android:onClick="sortdist"
+                    android:theme="@style/MyRadioButton"
             />
             <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:id="@+id/rb2"
                     android:text="времени"
+                    android:onClick="sorttime"
+                    android:theme="@style/MyRadioButton"
             />
             <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:id="@+id/rb3"
                     android:text="дате"
+                    android:onClick="sortdate"
+                    android:theme="@style/MyRadioButton"
             />
         </RadioGroup>
-
-        <androidx.appcompat.widget.SwitchCompat
-                android:theme="@style/MySwitchCompatTheme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/switchcompat"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/rg"
-                android:layout_marginRight="5dp"
-                android:text="Обратный порядок"
-                android:textSize="14sp"
-        />
-
-        <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="сортировать"
-                android:textSize="12sp"
-                android:onClick="mysort"
-                app:cornerRadius="56dp"
-        />
 
     </RelativeLayout>
 
