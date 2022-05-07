@@ -14,13 +14,13 @@ import androidx.core.content.ContextCompat;
 public class MainActivity extends AppCompatActivity {
 
     static boolean threadBool = true;
-    private static final int ACCESS_COARSE_LOCATION = 100;
+    private static final int ACCESS = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkPermission(ACCESS_COARSE_LOCATION);
+        checkPermission();
     }
 
     public void start(View view) {
@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, RecyclerViewActivity.class));
     }
 
-    public void checkPermission(int requestCode) {
+    public void checkPermission() {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED ||
                 ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, requestCode);
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, ACCESS);
         }
     }
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == ACCESS_COARSE_LOCATION) {
+        if (requestCode == ACCESS) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) Toast.makeText(MainActivity.this,
                     "Permission Granted", Toast.LENGTH_SHORT) .show();
             else Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT) .show();
