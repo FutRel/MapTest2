@@ -29,7 +29,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
     private ArrayList<RecordForRecycler> arrayListRecords;
     private boolean sortDistFlag = true;
     private boolean sortTimeFlag = true;
-    private boolean sortDateFlag = true;
+    private boolean sortDateFlag = false;
     TextView tvTotalDist;
     RadioButton rb1;
     RadioButton rb2;
@@ -153,14 +153,46 @@ public class RecyclerViewActivity extends AppCompatActivity {
             RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
             recyclerView.setAdapter(adapter);
             sortDistFlag = !sortDistFlag;
+            sortTimeFlag = true;
+            sortDateFlag = true;
         }
     }
 
     public void sortTime(View view){
         if(!arrayListRecords.isEmpty()){
             ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-            if(sortTimeFlag) arrayList.sort(RecordForRecycler.compareByTimeReversed);
-            else arrayList.sort(RecordForRecycler.compareByTime);
+            ColorStateList colorStateList;
+            if(sortTimeFlag) {
+                arrayList.sort(RecordForRecycler.compareByTimeReversed);
+                colorStateList = new ColorStateList(
+                        new int[][]
+                                {
+                                        new int[]{android.R.attr.state_checked},
+                                        new int[]{}
+                                },
+                        new int[]
+                                {
+                                        getResources().getColor(R.color.biruze),
+                                        Color.BLACK,
+                                }
+                );
+            }
+            else {
+                arrayList.sort(RecordForRecycler.compareByTime);
+                colorStateList = new ColorStateList(
+                        new int[][]
+                                {
+                                        new int[]{android.R.attr.state_checked},
+                                        new int[]{}
+                                },
+                        new int[]
+                                {
+                                        getResources().getColor(R.color.orange),
+                                        Color.BLACK,
+                                }
+                );
+            }
+            rb2.setButtonTintList(colorStateList);
             RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
                 Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
                 intent.putExtra("idOfRecord", arrayList.get(position).getId());
@@ -169,13 +201,45 @@ public class RecyclerViewActivity extends AppCompatActivity {
             RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
             recyclerView.setAdapter(adapter);
             sortTimeFlag = !sortTimeFlag;
+            sortDistFlag = true;
+            sortDateFlag = true;
         }
     }
 
     public void sortDate(View view){
         if(!arrayListRecords.isEmpty()){
             ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-            if(!sortDateFlag) Collections.reverse(arrayList);
+            ColorStateList colorStateList;
+            if(sortDateFlag) {
+                colorStateList = new ColorStateList(
+                        new int[][]
+                                {
+                                        new int[]{android.R.attr.state_checked},
+                                        new int[]{}
+                                },
+                        new int[]
+                                {
+                                        getResources().getColor(R.color.biruze),
+                                        Color.BLACK,
+                                }
+                );
+            }
+            else {
+                Collections.reverse(arrayList);
+                colorStateList = new ColorStateList(
+                        new int[][]
+                                {
+                                        new int[]{android.R.attr.state_checked},
+                                        new int[]{}
+                                },
+                        new int[]
+                                {
+                                        getResources().getColor(R.color.orange),
+                                        Color.BLACK,
+                                }
+                );
+            }
+            rb3.setButtonTintList(colorStateList);
             RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
                 Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
                 intent.putExtra("idOfRecord", arrayList.get(position).getId());
@@ -184,6 +248,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
             RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
             recyclerView.setAdapter(adapter);
             sortDateFlag = !sortDateFlag;
+            sortDistFlag = true;
+            sortTimeFlag = true;
         }
     }
 }
