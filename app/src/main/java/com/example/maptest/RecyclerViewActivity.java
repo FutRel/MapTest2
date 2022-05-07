@@ -93,44 +93,49 @@ public class RecyclerViewActivity extends AppCompatActivity {
     public void back(View view){startActivity(new Intent(RecyclerViewActivity.this, MainActivity.class));}
 
     public void sortDist(View view){
-        ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-        if(sortDistFlag) arrayList.sort(RecordForRecycler.compareByDistReversed);
-        else arrayList.sort(RecordForRecycler.compareByDist);
-        RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
-            Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
-            intent.putExtra("idOfRecord", arrayList.get(position).getId());
-            startActivity(intent);
-        };
-        RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
-        recyclerView.setAdapter(adapter);
-        sortDistFlag = !sortDistFlag;
+        if(!arrayListRecords.isEmpty()){
+            ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
+            if(sortDistFlag) arrayList.sort(RecordForRecycler.compareByDistReversed);
+            else arrayList.sort(RecordForRecycler.compareByDist);
+            RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
+                Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
+                intent.putExtra("idOfRecord", arrayList.get(position).getId());
+                startActivity(intent);
+            };
+            RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
+            recyclerView.setAdapter(adapter);
+            sortDistFlag = !sortDistFlag;
+        }
     }
 
     public void sortTime(View view){
-        ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-        if(sortTimeFlag) arrayList.sort(RecordForRecycler.compareByTimeReversed);
-        else arrayList.sort(RecordForRecycler.compareByTime);
-        RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
-            Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
-            intent.putExtra("idOfRecord", arrayList.get(position).getId());
-            startActivity(intent);
-        };
-        RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
-        recyclerView.setAdapter(adapter);
-        sortTimeFlag = !sortTimeFlag;
+        if(!arrayListRecords.isEmpty()){
+            ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
+            if(sortTimeFlag) arrayList.sort(RecordForRecycler.compareByTimeReversed);
+            else arrayList.sort(RecordForRecycler.compareByTime);
+            RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
+                Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
+                intent.putExtra("idOfRecord", arrayList.get(position).getId());
+                startActivity(intent);
+            };
+            RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
+            recyclerView.setAdapter(adapter);
+            sortTimeFlag = !sortTimeFlag;
+        }
     }
 
     public void sortDate(View view){
-        ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-        if(!sortDateFlag) Collections.reverse(arrayList);
-        RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
-            Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
-            intent.putExtra("idOfRecord", arrayList.get(position).getId());
-            startActivity(intent);
-        };
-        RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
-        recyclerView.setAdapter(adapter);
-        sortDateFlag = !sortDateFlag;
-
+        if(!arrayListRecords.isEmpty()){
+            ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
+            if(!sortDateFlag) Collections.reverse(arrayList);
+            RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
+                Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
+                intent.putExtra("idOfRecord", arrayList.get(position).getId());
+                startActivity(intent);
+            };
+            RecordAdapter adapter = new RecordAdapter(this, arrayList, recordClickListener);
+            recyclerView.setAdapter(adapter);
+            sortDateFlag = !sortDateFlag;
+        }
     }
 }
