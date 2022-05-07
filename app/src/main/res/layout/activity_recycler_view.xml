@@ -11,7 +11,7 @@
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="140dp"
             android:background="@drawable/layout_bg_white_w_cyan_w_no_round"
             android:id="@+id/rl1">
 
@@ -22,7 +22,6 @@
                 android:text="->"
                 android:textSize="13sp"
                 android:onClick="back"
-                android:layout_alignParentBottom="false"
                 android:layout_alignParentRight="true"
                 android:id="@+id/back"
                 android:layout_marginTop="3dp"
@@ -38,9 +37,10 @@
                 android:textColor="@color/biruze"
                 android:shadowColor="@color/black"
                 android:shadowRadius="9"
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="18dp"
-                android:id="@+id/all"
+                android:id="@+id/total"
         />
 
         <TextView
@@ -54,7 +54,7 @@
                 android:textColor="@color/biruze"
                 android:shadowColor="@color/black"
                 android:shadowRadius="9"
-                android:layout_toRightOf="@+id/all"
+                android:layout_toRightOf="@+id/total"
                 android:layout_marginTop="3dp"
         />
 
@@ -65,17 +65,18 @@
                 android:text="Сортировать по:"
                 android:textSize="14sp"
                 android:textColor="@color/black"
-                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/rg"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="30dp"
-                android:layout_marginLeft="120dp"
+                android:layout_marginBottom="38dp"
         />
 
         <RadioGroup
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:layout_toRightOf="@+id/tvsort"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="64dp"
+                android:layout_marginBottom="10dp"
                 android:id="@+id/rg">
             <RadioButton
                     android:layout_width="wrap_content"
@@ -83,7 +84,6 @@
                     android:id="@+id/rb1"
                     android:text="Дистанции"
                     android:onClick="sortDist"
-                    android:theme="@style/MyRadioButton"
             />
             <RadioButton
                     android:layout_width="wrap_content"
@@ -91,7 +91,6 @@
                     android:id="@+id/rb2"
                     android:text="Времени"
                     android:onClick="sortTime"
-                    android:theme="@style/MyRadioButton"
             />
             <RadioButton
                     android:layout_width="wrap_content"
@@ -99,7 +98,6 @@
                     android:id="@+id/rb3"
                     android:text="Дате"
                     android:onClick="sortDate"
-                    android:theme="@style/MyRadioButton"
             />
         </RadioGroup>
 

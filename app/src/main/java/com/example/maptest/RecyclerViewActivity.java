@@ -1,13 +1,16 @@
 package com.example.maptest;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.maptest.data.RecordsContract;
@@ -23,25 +26,40 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private float totalDistance = 0;
-    public TextView tvTotalDist;
-    public RadioGroup radioGroup;
-    public ArrayList<RecordForRecycler> arrayListRecords;
+    private ArrayList<RecordForRecycler> arrayListRecords;
     private boolean sortDistFlag = true;
     private boolean sortTimeFlag = true;
     private boolean sortDateFlag = true;
+    TextView tvTotalDist;
     RadioButton rb1;
     RadioButton rb2;
     RadioButton rb3;
+    RadioGroup rg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
-        radioGroup = findViewById(R.id.rg);
+        rg = findViewById(R.id.rg);
         rb1 = findViewById(R.id.rb1);
         rb2 = findViewById(R.id.rb2);
         rb3 = findViewById(R.id.rb3);
         rb3.setChecked(true);
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][]
+                        {
+                                new int[]{android.R.attr.state_checked},
+                                new int[]{}
+                        },
+                new int[]
+                        {
+                                getResources().getColor(R.color.biruze),
+                                Color.BLACK,
+                        }
+        );
+        rb1.setButtonTintList(colorStateList);
+        rb2.setButtonTintList(colorStateList);
+        rb3.setButtonTintList(colorStateList);
         RecordsDBHelper rdbHelper = new RecordsDBHelper(this);
         SQLiteDatabase db = rdbHelper.getReadableDatabase();
         String[] columns = {
@@ -95,8 +113,38 @@ public class RecyclerViewActivity extends AppCompatActivity {
     public void sortDist(View view){
         if(!arrayListRecords.isEmpty()){
             ArrayList<RecordForRecycler> arrayList = new ArrayList<>(arrayListRecords);
-            if(sortDistFlag) arrayList.sort(RecordForRecycler.compareByDistReversed);
-            else arrayList.sort(RecordForRecycler.compareByDist);
+            ColorStateList colorStateList;
+            if(sortDistFlag) {
+                arrayList.sort(RecordForRecycler.compareByDistReversed);
+                colorStateList = new ColorStateList(
+                        new int[][]
+                                {
+                                        new int[]{android.R.attr.state_checked},
+                                        new int[]{}
+                                },
+                        new int[]
+                                {
+                                        getResources().getColor(R.color.biruze),
+                                        Color.BLACK,
+                                }
+                );
+            }
+            else {
+                arrayList.sort(RecordForRecycler.compareByDist);
+                colorStateList = new ColorStateList(
+                        new int[][]
+                                {
+                                        new int[]{android.R.attr.state_checked},
+                                        new int[]{}
+                                },
+                        new int[]
+                                {
+                                        getResources().getColor(R.color.orange),
+                                        Color.BLACK,
+                                }
+                );
+            }
+            rb1.setButtonTintList(colorStateList);
             RecordAdapter.OnRecordClickListener recordClickListener = (record, position) -> {
                 Intent intent = new Intent(RecyclerViewActivity.this, MapInformationActivity.class);
                 intent.putExtra("idOfRecord", arrayList.get(position).getId());
