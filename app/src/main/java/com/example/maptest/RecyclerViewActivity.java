@@ -139,7 +139,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                                 },
                         new int[]
                                 {
-                                        getResources().getColor(R.color.purple_500),
+                                        getResources().getColor(R.color.purple_200),
                                         Color.BLACK,
                                 }
                 );
@@ -187,7 +187,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                                 },
                         new int[]
                                 {
-                                        getResources().getColor(R.color.purple_500),
+                                        getResources().getColor(R.color.purple_200),
                                         Color.BLACK,
                                 }
                 );
@@ -234,7 +234,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                                 },
                         new int[]
                                 {
-                                        getResources().getColor(R.color.purple_500),
+                                        getResources().getColor(R.color.purple_200),
                                         Color.BLACK,
                                 }
                 );
