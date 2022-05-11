@@ -54,7 +54,7 @@
         <com.google.android.material.button.MaterialButton
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
-                android:onClick="onClick"
+                android:onClick="find"
                 android:id="@+id/found"
                 android:text="Я"
                 android:backgroundTint="@color/black"

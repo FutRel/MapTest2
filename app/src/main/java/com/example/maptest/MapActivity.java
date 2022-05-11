@@ -252,7 +252,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .newLatLngZoom(new LatLng(54.759955, 56.020414), 14));}
     }
 
-    public void onClick(View view) {
+    public void find(View view) {
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
