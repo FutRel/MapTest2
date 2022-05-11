@@ -26,7 +26,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
     TextView tvDist;
     TextView tvTime;
     TextView tvDate;
-    TextView tvAvspeed;
+    TextView tvAvSpeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,13 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
         tvDist = findViewById(R.id.dist_inf);
         tvTime = findViewById(R.id.time_inf);
         tvDate = findViewById(R.id.date_inf);
-        tvAvspeed = findViewById(R.id.avspeed_inf);
+        tvAvSpeed = findViewById(R.id.avspeed_inf);
 
         RecordsDBHelper rdbHelper = new RecordsDBHelper(this);
         PointsDBHelper pdbHelper = new PointsDBHelper(this);
@@ -76,7 +77,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         tvDist.setText(String.format("%.2f", distance / 1000) + " км");
         tvTime.setText(timeStr);
         tvDate.setText(date);
-        tvAvspeed.setText(String.format("%.2f", avspeed) + " км/ч");
+        tvAvSpeed.setText(String.format("%.2f", avspeed) + " км/ч");
 
         SQLiteDatabase pdb = pdbHelper.getReadableDatabase();
         String[] columnsPDB = {
