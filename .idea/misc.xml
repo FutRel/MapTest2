@@ -11,8 +11,11 @@
         <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_bl_w_transpar_corn.xml" value="0.3958333333333333" />
         <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_cyan.xml" value="0.25" />
         <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_cyan_w_bl_corn.xml" value="0.25" />
+        <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_grey.xml" value="0.3958333333333333" />
         <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_grey_w_cyan.xml" value="0.25" />
         <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_light.xml" value="0.24039087947882737" />
+        <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_transparent_w_bl_corn.xml" value="0.3958333333333333" />
+        <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_white.xml" value="0.3958333333333333" />
         <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_white_w_cyan.xml" value="0.25" />
         <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bg_white_w_cyan_w_no_round.xml" value="0.25" />
         <entry key="..\:/MapTest/app/src/main/res/drawable/layout_bl.xml" value="0.25" />
@@ -97,7 +100,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="jbr-11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="jbr-11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
