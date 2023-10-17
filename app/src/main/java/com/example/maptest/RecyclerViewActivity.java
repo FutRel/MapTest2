@@ -17,7 +17,6 @@ import com.example.maptest.data.RecordsDBHelper;
 import com.example.maptest.recycler.RecordAdapter;
 import com.example.maptest.recycler.RecordForRecycler;
 import com.example.maptest.recycler.RecyclerItemSpace;
-
 import java.util.ArrayList;
 import java.util.Collections;
 

@@ -15,7 +15,6 @@ import com.example.maptest.data.RecordsDBHelper;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.example.maptest.databinding.ActivityMapInformationBinding;
-
 import java.util.ArrayList;
 
 public class MapInformationActivity extends FragmentActivity implements OnMapReadyCallback {
