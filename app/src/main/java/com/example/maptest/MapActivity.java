@@ -98,7 +98,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
-            float var = (int) sensorEvent.values[0];
+            float var = sensorEvent.values[0];
             if (t[0] % 40 == 0) {
                 myMap.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder(myMap
                                 .getCameraPosition())

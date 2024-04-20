@@ -111,7 +111,7 @@ public class MapInformationActivity extends FragmentActivity implements OnMapRea
         uiSettings.setMapToolbarEnabled(false);
         uiSettings.setIndoorLevelPickerEnabled(false);
 
-        if (arrayLatitude.size() > 0) {
+        if (!arrayLatitude.isEmpty()) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arrayLatitude.get(arrayLatitude.size() - 2),
                     arrayLongitude.get(arrayLongitude.size() - 2)), 16));
 
